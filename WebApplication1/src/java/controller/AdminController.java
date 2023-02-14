@@ -94,7 +94,7 @@ public class AdminController extends HttpServlet {
                 if (submit == null) { // hien thi form chua submit
                     // lay ra ban ghi can hien thi
                     String admin = request.getParameter("admin");
-                    Vector<Admin> vec = dao.getAllAdmin("select * from admin where admin ='" + admin + "'");
+                    Vector<Admin> vec = dao.getAdmin("select * from admin where admin ='" + admin + "'");
                     Admin ad = vec.get(0);
                     //display
                     out.print("<form action=\"AdminControllerURL\"  method = \"POST\">\n"

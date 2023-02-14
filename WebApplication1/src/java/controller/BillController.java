@@ -13,7 +13,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,62 +39,150 @@ public class BillController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOBill dao = new DAOBill();
-        
+
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BillController</title>");            
+            out.println("<title>Servlet BillController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet BillController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-            
-            String bid = request.getParameter("bid");
-            String recAddress = request.getParameter("recAddress");
-            String recPhone = request.getParameter("recPhone");
-            String note = request.getParameter("note");
-            double totalMoney = Double.parseDouble(request.getParameter("totalMoney"));
-            int status = Integer.parseInt(request.getParameter("status"));
-            String cid = request.getParameter("cid");
-            Bill bill = new Bill(bid, recAddress, recPhone, note, totalMoney, status, cid);
-            int n = dao.AddBill(bill);
-            if (n > 0) {
-                out.println("Inserted");
+
+            String go = request.getParameter("go");
+            if (go == null) {
+                go = "listAll"; //Default value
             }
-            
-            out.print("<table border = \"1\">\n"
-                    + "            <caption>PRODUCT LIST</caption>\n"
-                    + "            <tr>\n"
-                    + "                <th>Bill ID</th>\n"
-                    + "                <th>Date Create</th>\n"
-                    + "                <th>Address</th>\n"
-                    + "                <th>Phone</th>\n"
-                    + "                <th>Note</th>\n"
-                    + "                <th>Total Money</th>\n"
-                    + "                <th>Status</th>\n"
-                    + "                <th>Customer ID</th>\n"
-                    + "            </tr>");
+            if (go.equals("insert")) {
+                String bid = request.getParameter("bid");
+                String recAddress = request.getParameter("recAddress");
+                String recPhone = request.getParameter("recPhone");
+                String note = request.getParameter("note");
+                //Start value of total is 0
+                double totalMoney = 0;
+                int status = Integer.parseInt(request.getParameter("status"));
+                String cid = request.getParameter("cid");
+                Bill bill = new Bill(bid, recAddress, recPhone, note, totalMoney, status, cid);
+                int n = dao.AddBill(bill);
+                if (n > 0) {
+                    out.println("Inserted");
+                }
+                response.sendRedirect("BillControllerURL");
+            }
+            if (go.equals("listAll")) {
+                out.print("<table border = \"1\">\n"
+                        + "            <caption>PRODUCT LIST</caption>\n"
+                        + "            <tr>\n"
+                        + "                <th>Bill ID</th>\n"
+                        + "                <th>Date Create</th>\n"
+                        + "                <th>Address</th>\n"
+                        + "                <th>Phone</th>\n"
+                        + "                <th>Note</th>\n"
+                        + "                <th>Total Money</th>\n"
+                        + "                <th>Status</th>\n"
+                        + "                <th>Customer ID</th>\n"
+                        + "                <th>Update</th>\n"
+                        + "                <th>Delete</th>\n"
+                        + "            </tr>");
 
-            Vector<Bill> vector = dao.getAllBill();
+                Vector<Bill> vector = dao.getAllBill();
 
-            for (Bill temp : vector) {
-                out.print("<tr>\n"
-                        + "                <td>" + temp.getBid()+ "</td>\n"
-                        + "                <td>" + temp.getDateCreate() + "</td>\n"
-                        + "                <td>" + temp.getRecAddress()+ "</td>\n"
-                        + "                <td>" + temp.getRecPhone()+ "</td>\n"
-                        + "                <td>" + temp.getNote() + "</td>\n"
-                        + "                <td>" + temp.getTotalMoney() + "</td>\n"
-                        + "                <td>" + (temp.getStatus() == 1 ? "Enable" : "Disable") + "</td>\n"
-                        + "                <td>" + temp.getCid()+ "</td>\n"
+                for (Bill temp : vector) {
+                    out.print("<tr>\n"
+                            + "                <td>" + temp.getBid() + "</td>\n"
+                            + "                <td>" + temp.getDateCreate() + "</td>\n"
+                            + "                <td>" + temp.getRecAddress() + "</td>\n"
+                            + "                <td>" + temp.getRecPhone() + "</td>\n"
+                            + "                <td>" + temp.getNote() + "</td>\n"
+                            + "                <td>" + temp.getTotalMoney() + "</td>\n"
+                            + "                <td>" + (temp.getStatus() == 1 ? "Enable" : "Disable") + "</td>\n"
+                            + "                <td>" + temp.getCid() + "</td>\n"
+                            + "                <td><a href=\"BillControllerURL?go=update&bid=" + temp.getBid() + "\">Update</a></td>\n"
+                            + "                <td><a href=\"BillControllerURL?go=delete&bid=" + temp.getBid() + "\">Delete</a></td>\n"
+                            + "</tr>");
+                }
+                out.println("<tr>"
+                        + "<td><a href=\"BillManage.html\">Bill  Manage</a></td>"
+                        + "<td><a href=\"./InsertPage/InsertBill.html\">Insert Bill</a></td>"
                         + "</tr>");
+                out.print("</table>");
             }
-            out.print("</table>");
-            
-            
+            if (go.equals("delete")) {
+                String bid = request.getParameter("bid");
+                int n = dao.removeBill(bid);
+                response.sendRedirect("BillControllerURL");
+            }
+
+            if (go.equals("update")) {
+                //Check hien thi form hay update bang submit
+                String submit = request.getParameter("submit");
+                if (submit == null) { // hien thi form chua submit
+                    String bid = request.getParameter("bid");
+                    String pid = request.getParameter("pid");
+                    Vector<Bill> vec = dao.getBill("select * from Bill where  bid= '" + bid + "'");
+                    Bill bill = vec.get(0);
+                    out.print("<form action=\"BillControllerURL\"  method = \"POST\">\n"
+                            + "        <input type=\"hidden\" name=\"go\" value=\"update\">\n"
+                            + "        <table>\n"
+                            + "            <tr>\n"
+                            + "                <td><label for=\"bid\">Bill ID</label></td>\n"
+                            + "                <td><input type=\"text\" name=\"bid\" id = \"bid\" value = \"" + bill.getBid() + "\" readonly></td>\n"
+                            + "            </tr>\n"
+                            + "            <tr>\n"
+                            + "                <td><label for=\"recAddress\">Address</label></td>\n"
+                            + "                <td><input type=\"text\" name=\"recAddress\" id = \"recAddress\" value = \"" + bill.getRecAddress() + "\"></td>\n"
+                            + "            </tr>\n"
+                            + "            <tr>\n"
+                            + "                <td><label for=\"recPhone\">Phone number</label></td>\n"
+                            + "                <td><input type=\"text\" name=\"recPhone\" id = \"recPhone\" value = \"" + bill.getRecPhone() + "\"></td>\n"
+                            + "            </tr>\n"
+                            + "            <tr>\n"
+                            + "                <td><label for=\"note\">Note</label></td>\n"
+                            + "                <td><input type=\"text\" name=\"note\" id = \"note\" value = \"" + bill.getNote() + "\"></td>\n"
+                            + "            </tr>\n"
+                            + "            <tr>\n"
+                            + "                <td><label for=\"status\">status</label></td>\n"
+                            + "                <td>\n"
+                            + "                    <input type=\"radio\" name=\"status\" id = \"status\" value=\"1\" " + (bill.getStatus() == 1 ? "checked" : "") + "> Enable\n"
+                            + "                    <input type=\"radio\" name=\"status\" id = \"status\" value=\"0\" " + (bill.getStatus() == 0 ? "checked" : "") + " > Disable\n"
+                            + "                </td>\n"
+                            + "            </tr>\n"
+                            + "            <tr>\n"
+                            + "                <td><label for=\"cid\">Customer ID</label></td>\n"
+                            + "                <td><input type=\"text\" name=\"cid\" id = \"cid\" value = \"" + bill.getCid() + "\"></td>\n"
+                            + "            </tr>\n"
+                            + "            <tr>\n"
+                            + "                <td><input type=\"submit\" value=\"Update Bill \" name=\"submit\"></td>\n"
+                            + "            </tr>\n"
+                            + "            \n"
+                            + "        </table>\n"
+                            + "    </form>");
+                } else {
+                    String bid = request.getParameter("bid");
+                    String recAddress = request.getParameter("recAddress");
+                    String recPhone = request.getParameter("recPhone");
+                    String note = request.getParameter("note");
+                    String sql = "SELECT B.bid, sum(subtotal) as totalMoney from Bill as B, BillDetail as BD where B.bid = BD.bid and B.bid = '" + bid + "' group by B.bid ";
+                    ResultSet rs = dao.getData(sql);
+                    if (rs.next()) {
+                        double totalMoney = rs.getDouble(2);
+                        out.print(totalMoney + "");
+                        int status = Integer.parseInt(request.getParameter("status"));
+                        String cid = request.getParameter("cid");
+                        Bill bill = new Bill(bid, recAddress, recPhone, note, totalMoney, status, cid);
+                        int n = dao.update(bill);
+                        if (n > 0) {
+                            out.println("Updated");
+                        }
+                    }
+                    response.sendRedirect("BillControllerURL");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

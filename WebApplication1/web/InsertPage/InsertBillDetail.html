@@ -7,7 +7,8 @@
     <title>Insert Bill Detail</title>
 </head>
 <body>
-    <form action="BillDetailControllerURL"  method = "POST">
+    <form action="../BillDetailControllerURL"  method = "POST">
+        <input type="hidden" name="go" value="insert">
         <table>
             <tr>
                 <td><label for="bid">Bill ID</label></td>
@@ -20,10 +21,6 @@
             <tr>
                 <td><label for="buyQuantity">Quantity</label></td>
                 <td><input type="text" name="buyQuantity" id = "buyQuantity"></td>
-            </tr>
-            <tr>
-                <td><label for="buyPrice">Price</label></td>
-                <td><input type="text" name="buyPrice" id = "buyPrice"></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Insert Bill Detail" name="submit"></td>

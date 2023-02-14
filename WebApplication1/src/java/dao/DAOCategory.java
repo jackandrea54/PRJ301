@@ -106,6 +106,25 @@ public class DAOCategory extends DBConnect {
         return vector;
     }
     
+    public Vector<Category> getCategory(String sql) {
+        Vector<Category> vector = new Vector<>();
+        ResultSet rs = this.getData(sql);
+        try {
+            while (rs.next()) {
+                int cateID = rs.getInt(1);
+                String cateName = rs.getString(2);
+                int status = rs.getInt(3);
+                Category cate = new Category(cateID, cateName, status);
+                vector.add(cate);
+//                System.out.println(cate);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCategory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return vector;
+    }
+    
     public int removeCategory(String cateID) {
         int n = 0;
         String sql = "Delete from Category where cateID ='" + cateID + "'";
@@ -121,7 +140,7 @@ public class DAOCategory extends DBConnect {
                 n = state.executeUpdate(sql);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOBill.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return n;

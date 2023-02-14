@@ -87,8 +87,7 @@ public class DAOBill extends DBConnect {
         int n = 0;
         String sql = "USE [SE1704]\n"
                 + "UPDATE [Bill]\n"
-                + "   SET [dateCreate] = ?\n"
-                + "      ,[recAddress] = ?\n"
+                + "   SET [recAddress] = ?\n"
                 + "      ,[recPhone] = ?\n"
                 + "      ,[note] = ?\n"
                 + "      ,[totalMoney] = ?\n"
@@ -100,14 +99,13 @@ public class DAOBill extends DBConnect {
             PreparedStatement pre;
             pre = conn.prepareStatement(sql);
             
-            pre.setString(1, bill.getDateCreate());
-            pre.setString(2, bill.getRecAddress());
-            pre.setString(3, bill.getRecPhone());
-            pre.setString(4, bill.getNote());
-            pre.setDouble(5, bill.getTotalMoney());
-            pre.setInt(6, bill.getStatus());
-            pre.setString(7, bill.getCid());
-            pre.setString(8, bill.getBid());
+            pre.setString(1, bill.getRecAddress());
+            pre.setString(2, bill.getRecPhone());
+            pre.setString(3, bill.getNote());
+            pre.setDouble(4, bill.getTotalMoney());
+            pre.setInt(5, bill.getStatus());
+            pre.setString(6, bill.getCid());
+            pre.setString(7, bill.getBid());
             
             n = pre.executeUpdate();
         } catch (SQLException ex) {
@@ -120,6 +118,30 @@ public class DAOBill extends DBConnect {
     public Vector<Bill> getAllBill() {
         Vector<Bill> vector = new Vector<>();
         ResultSet rs = this.getData("select * from Bill");
+        try {
+            while (rs.next()) {
+                String bid = rs.getString(1);
+                String dateCreate = rs.getString(2);
+                String recAddress = rs.getString(3);
+                String recPhone = rs.getString(4);
+                String note = rs.getString(5);
+                double totalMoney = rs.getDouble(6);
+                int status = rs.getInt(7);
+                String cid = rs.getString(8);
+                Bill bill = new Bill(bid, dateCreate ,recAddress, recPhone, note, totalMoney, status, cid);
+                vector.add(bill);
+                System.out.println(bill);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return vector;
+    }
+    
+    public Vector<Bill> getBill(String sql) {
+        Vector<Bill> vector = new Vector<>();
+        ResultSet rs = this.getData(sql);
         try {
             while (rs.next()) {
                 String bid = rs.getString(1);
@@ -156,7 +178,7 @@ public class DAOBill extends DBConnect {
                 n = state.executeUpdate(sql);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOBill.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return n;
@@ -164,7 +186,7 @@ public class DAOBill extends DBConnect {
     
     public static void main(String[] args) {
         DAOBill dao = new DAOBill();
-        int n = dao.update(new Bill("B02", "2020-10-29", "SG", "0352963942", "Very poor", 102131213, 0, "C02"));
+        int n = dao.update(new Bill("B02", "SG", "0352963942", "Very poor", 0, 0, "C02"));
         if (n > 0) {
             System.out.println("updated");
         }

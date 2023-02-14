@@ -145,6 +145,32 @@ public class DAOProduct extends DBConnect {
 
         return vector;
     }
+    
+    public Vector<Product> getProduct(String sql) {
+        Vector<Product> vector = new Vector<>();
+        ResultSet rs = this.getData(sql);
+        try {
+            while (rs.next()) {
+                String pid = rs.getString(1);
+                String pname = rs.getString(2);
+                int quantity = rs.getInt(3);
+                double price = rs.getDouble(4);
+                String image = rs.getString(5);
+                String description = rs.getString(6);
+                int status = rs.getInt(7);
+                int cateID = rs.getInt(8);
+                Product prod = new Product(pid, pname, quantity, price, image, description, status, cateID);
+                vector.add(prod);
+//                System.out.println(cate);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCategory.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return vector;
+    }
 
     public int removeProduct(String pid) {
         int n = 0;
@@ -162,7 +188,7 @@ public class DAOProduct extends DBConnect {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCustomer.class
+            Logger.getLogger(DAOCategory.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 

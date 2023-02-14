@@ -114,15 +114,35 @@ public class DAOBillDetail extends DBConnect {
 
         return vector;
     }
+    
+    public Vector<BillDetail> getBillDetail(String sql) {
+        Vector<BillDetail> vector = new Vector<>();
+        ResultSet rs = this.getData(sql);
+        try {
+            while (rs.next()) {
+                String bid = rs.getString(1);
+                String pid = rs.getString(2);
+                int buyQuantity = rs.getInt(3);
+                double buyPrice = rs.getDouble(4);
+                double subTotal = rs.getDouble(5);
+                BillDetail billDetail = new BillDetail(bid, pid, buyQuantity, buyPrice, subTotal);
+                vector.add(billDetail);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBillDetail.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-    public int removeBillDetail(String pid) {
+        return vector;
+    }
+
+    public int removeBillDetail(String bid, String pid) {
         int n = 0;
-        String sql = "Delete from BillDetail where pid ='" + pid + "'";
+        String sql = "Delete from BillDetail where bid = '" + bid + "' and pid ='" + pid + "'";
         try {
                 Statement state = conn.createStatement();
                 n = state.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOBillDetail.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return n;
@@ -130,7 +150,7 @@ public class DAOBillDetail extends DBConnect {
     
     public static void main(String[] args) {
         DAOBillDetail dao = new DAOBillDetail();
-        int n = dao.update(new BillDetail("B01", "P02", 1, 120000, 120000));
+        int n = dao.AddBillDetail(new BillDetail("B52", "P2", 1, 12000, 12000));
         if (n > 0) {
             System.out.println("updated");
         }

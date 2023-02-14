@@ -101,7 +101,7 @@ public class DAOAdmin extends DBConnect {
         return vector;
     }
     
-    public Vector<Admin> getAllAdmin(String sql) {
+    public Vector<Admin> getAdmin(String sql) {
         Vector<Admin> vector = new Vector<>();
         ResultSet rs = this.getData(sql);
         try {
@@ -126,7 +126,7 @@ public class DAOAdmin extends DBConnect {
                 Statement state = conn.createStatement();
                 n = state.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return n;

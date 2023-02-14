@@ -159,7 +159,7 @@ public class DAOCustomer extends DBConnect {
         return vector;
     }
     
-    public Vector<Customer> getAllCustomer(String sql) {
+    public Vector<Customer> getCustomer(String sql) {
         Vector<Customer> vector = new Vector<>();
         ResultSet rs = this.getData(sql);
         try {

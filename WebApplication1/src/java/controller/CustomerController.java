@@ -53,7 +53,7 @@ public class CustomerController extends HttpServlet {
                 go = "listAll"; //Default value
             }
 
-            if (go.equals("insertCustomer")) {
+            if (go.equals("insert")) {
                 String cid = request.getParameter("cid");
                 String cname = request.getParameter("cname");
                 String username = request.getParameter("username");
@@ -123,7 +123,7 @@ public class CustomerController extends HttpServlet {
                 if (submit == null) { // hien thi form chua submit
                     // lay ra ban ghi can hien thi
                     String cid = request.getParameter("cid");
-                    Vector<Customer> vec = dao.getAllCustomer("select * from Customer where cid ='" + cid + "'");
+                    Vector<Customer> vec = dao.getCustomer("select * from Customer where cid ='" + cid + "'");
                     Customer cus = vec.get(0);
                     //display
                     out.print("<form action = \"CustomerControllerURL\" method = \"POST\">\n"
@@ -162,7 +162,6 @@ public class CustomerController extends HttpServlet {
                             + "                </tr>\n"
                             + "                <tr>\n"
                             + "                    <td><input type=\"submit\" value=\"Update Customer\" name=\"submit\"></td>\n"
-                            + "                    <td><input type=\"reset\" value=\"reset\"></td>\n"
                             + "                </tr>\n"
                             + "            </table>\n"
                             + "            \n"
