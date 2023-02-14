@@ -139,7 +139,7 @@ public class CategoryController extends HttpServlet {
                     if (n > 0) {
                         out.print("Updated");
                     }
-                    response.sendRedirect("CustomerControllerURL");
+                    response.sendRedirect("CategoryControllerURL");
                 }
             }
         }
