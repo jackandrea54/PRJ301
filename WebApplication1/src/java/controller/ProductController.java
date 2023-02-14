@@ -129,7 +129,7 @@ public class ProductController extends HttpServlet {
                     String pid = request.getParameter("pid");
                     int cateID = Integer.parseInt(request.getParameter("cateID"));
                     ResultSet rsPro = dao.getData("select * from Product where pid='" + pid + "'");
-                    ResultSet rsCate = dao.getData("select * from category");
+                    ResultSet rsCate = dao.getData("select * from Category");
 
                     if (rsPro.next()) {
                         out.print("<form action=\"ProductControllerURL\"  method = \"POST\">\n"
