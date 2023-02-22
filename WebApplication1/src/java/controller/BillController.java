@@ -165,18 +165,20 @@ public class BillController extends HttpServlet {
                     String recAddress = request.getParameter("recAddress");
                     String recPhone = request.getParameter("recPhone");
                     String note = request.getParameter("note");
+                    double totalMoney = 0;
                     String sql = "SELECT B.bid, sum(subtotal) as totalMoney from Bill as B, BillDetail as BD where B.bid = BD.bid and B.bid = '" + bid + "' group by B.bid ";
                     ResultSet rs = dao.getData(sql);
                     if (rs.next()) {
-                        double totalMoney = rs.getDouble(2);
-                        out.print(totalMoney + "");
-                        int status = Integer.parseInt(request.getParameter("status"));
-                        String cid = request.getParameter("cid");
-                        Bill bill = new Bill(bid, recAddress, recPhone, note, totalMoney, status, cid);
-                        int n = dao.update(bill);
-                        if (n > 0) {
-                            out.println("Updated");
-                        }
+                        totalMoney = rs.getDouble(2);
+                    } else {
+                        totalMoney = 0;
+                    }
+                    int status = Integer.parseInt(request.getParameter("status"));
+                    String cid = request.getParameter("cid");
+                    Bill bill = new Bill(bid, recAddress, recPhone, note, totalMoney, status, cid);
+                    int n = dao.update(bill);
+                    if (n > 0) {
+                        out.println("Updated");
                     }
                     response.sendRedirect("BillControllerURL");
                 }

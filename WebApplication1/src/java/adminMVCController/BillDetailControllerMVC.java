@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package adminMVCController;
 
 import dao.DAOBillDetail;
 import dao.DAOProduct;
 import entity.BillDetail;
 import entity.Product;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,15 +16,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
 import java.util.Vector;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "BillDetailController", urlPatterns = {"/BillDetailControllerURL"})
-public class BillDetailController extends HttpServlet {
+@WebServlet(name = "BillDetailControllerMVC", urlPatterns = {"/BillDetailControllerMVC"})
+public class BillDetailControllerMVC extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,16 +37,18 @@ public class BillDetailController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAOBillDetail dao = new DAOBillDetail();
-
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
+            DAOBillDetail dao = new DAOBillDetail();
             String go = request.getParameter("go");
             if (go == null) {
                 go = "listAll"; //Default value
             }
-            
+            if (go.equals("listAll")) {
+                request.setAttribute("dataBillDe", dao.getAllBillDetail());
+                request.setAttribute("title", "List of Bill Detail");
+                dispath(request, response, "/adminJSP/ViewBillDetail.jsp");
+            }
             if (go.equals("insert")) {
                 String bid = request.getParameter("bid");
                 String pid = request.getParameter("pid");
@@ -54,54 +56,24 @@ public class BillDetailController extends HttpServlet {
                 //Get price then add
                 DAOProduct daoPro = new DAOProduct();
                 Vector<Product> vec = daoPro.getProduct("select * from Product where  pid = '" + pid + "'");
-                Product product = vec.get(0);
-                double buyPrice = product.getPrice();
-                BillDetail billDetail = new BillDetail(bid, pid, buyQuantity, buyPrice, buyQuantity * buyPrice);
-                
-                int n = dao.AddBillDetail(billDetail);
-                if (n > 0) {
-                    out.println("Inserted");
+                try {
+                    Product product = vec.get(0); //try catch vi cai nay de bi out of index do không tôn tai product nào
+                    double buyPrice = product.getPrice();
+                    BillDetail billDetail = new BillDetail(bid, pid, buyQuantity, buyPrice, buyQuantity * buyPrice);
+                    int n = dao.AddBillDetail(billDetail);
+                    dispath(request, response, "BillDetailControllerURL");
+                } catch (Exception e) {
+                    out.print(e);
+                    dispath(request, response, "BillDetailControllerURL");
                 }
-                response.sendRedirect("BillDetailControllerURL");
             }
-
-            if (go.equals("listAll")) {
-                out.print("<table border = \"1\">\n"
-                        + "            <caption>BILL DETAIL LIST</caption>\n"
-                        + "            <tr>\n"
-                        + "                <th>Bill ID</th>\n"
-                        + "                <th>Product ID</th>\n"
-                        + "                <th>Buy Quantity</th>\n"
-                        + "                <th>Buy Price</th>\n"
-                        + "                <th>Subtotal</th>\n"
-                        + "                <th>Update</th>\n"
-                        + "                <th>Delete</th>\n"
-                        + "            </tr>");
-
-                Vector<BillDetail> vector = dao.getAllBillDetail();
-
-                for (BillDetail temp : vector) {
-                    out.print("<tr>\n"
-                            + "                <td>" + temp.getBid() + "</td>\n"
-                            + "                <td>" + temp.getPid() + "</td>\n"
-                            + "                <td>" + temp.getBuyQuantity() + "</td>\n"
-                            + "                <td>" + temp.getBuyPrice() + "</td>\n"
-                            + "                <td>" + temp.getSubtotal() + "</td>\n"
-                            + "                <td><a href=\"BillDetailControllerURL?go=update&bid=" + temp.getBid() + "&pid=" + temp.getPid() + "\">Update</a></td>\n"
-                            + "                <td><a href=\"BillDetailControllerURL?go=delete&bid=" + temp.getBid() + "&pid=" + temp.getPid() + "\">Delete</a></td>\n"
-                            + "</tr>");
-                }
-                out.println("<tr>"
-                        + "<td><a href=\"BillDetailManage.html\">Bill Detail Manage</a></td>"
-                        + "<td><a href=\"./InsertPage/InsertBillDetail.html\">Insert Bill Detail</a></td>"
-                        + "</tr>");
-                out.print("</table>");
-            }
+            
+            
             if (go.equals("delete")) {
                 String bid = request.getParameter("bid");
                 String pid = request.getParameter("pid");
                 dao.removeBillDetail(bid, pid);
-                response.sendRedirect("BillDetailControllerURL");
+                dispath(request, response, "BillDetailControllerURL");
             }
             if (go.equals("update")) {
                 //Check hien thi form hay update bang submit
@@ -111,27 +83,8 @@ public class BillDetailController extends HttpServlet {
                     String pid = request.getParameter("pid");
                     Vector<BillDetail> vec = dao.getBillDetail("select * from BillDetail where  bid='" + bid + "' and pid = '" + pid + "'");
                     BillDetail billDetail = vec.get(0);
-                    out.print("<form action=\"BillDetailControllerURL\"  method = \"POST\">\n"
-                            + "        <input type=\"hidden\" name=\"go\" value=\"update\">\n"
-                            + "        <table>\n"
-                            + "            <tr>\n"
-                            + "                <td><label for=\"bid\">Bill ID</label></td>\n"
-                            + "                <td><input type=\"text\" name=\"bid\" id = \"bid\" value = \"" + billDetail.getBid() + "\" readonly></td>\n"
-                            + "            </tr>\n"
-                            + "            <tr>\n"
-                            + "                <td><label for=\"pid\">Product ID</label></td>\n"
-                            + "                <td><input type=\"text\" name=\"pid\" id = \"pid\" value = \"" + billDetail.getPid() + "\" readonly></td>\n"
-                            + "            </tr>\n"
-                            + "            <tr>\n"
-                            + "                <td><label for=\"buyQuantity\">Quantity</label></td>\n"
-                            + "                <td><input type=\"text\" name=\"buyQuantity\" id = \"buyQuantity\" value = \"" + billDetail.getBuyQuantity() + "\"></td>\n"
-                            + "            </tr>\n"
-                            + "            <tr>\n"
-                            + "                <td><input type=\"submit\" value=\"Update Bill Detail\" name=\"submit\"></td>\n"
-                            + "            </tr>\n"
-                            + "            \n"
-                            + "        </table>\n"
-                            + "    </form>");
+                    request.setAttribute("dataBillDe", billDetail);
+                    dispath(request, response, "/adminJSP/UpdateBillDetail.jsp");
                 } else {
                     String bid = request.getParameter("bid");
                     String pid = request.getParameter("pid");
@@ -147,10 +100,27 @@ public class BillDetailController extends HttpServlet {
                     if (n > 0) {
                         out.println("updated");
                     }
-                    response.sendRedirect("BillDetailControllerURL");
+                    dispath(request, response, "BillDetailControllerURL");
                 }
             }
+            if (go.equals("search")) {
+                String bid = request.getParameter("bid");
+                String sql = "select * from BillDetail where bid ='" + bid + "'";
+                Vector<BillDetail> vector = dao.getBillDetail(sql);
+                String titleTable = "List of Bill Detail";
+                //Chuan bi du lieu cho jsp
+                request.setAttribute("dataBillDe", vector);
+                request.setAttribute("title", titleTable);
+                dispath(request, response, "/adminJSP/ViewBillDetail.jsp");
+            }
         }
+    }
+    
+    void dispath(HttpServletRequest request, HttpServletResponse response, String url)
+            throws ServletException, IOException {
+        RequestDispatcher disp = request.getRequestDispatcher(url);
+        //run
+        disp.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

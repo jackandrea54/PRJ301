@@ -98,7 +98,7 @@ public class DAOBill extends DBConnect {
         try {
             PreparedStatement pre;
             pre = conn.prepareStatement(sql);
-            
+
             pre.setString(1, bill.getRecAddress());
             pre.setString(2, bill.getRecPhone());
             pre.setString(3, bill.getNote());
@@ -106,12 +106,12 @@ public class DAOBill extends DBConnect {
             pre.setInt(5, bill.getStatus());
             pre.setString(6, bill.getCid());
             pre.setString(7, bill.getBid());
-            
+
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOBill.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return n;
     }
 
@@ -125,10 +125,17 @@ public class DAOBill extends DBConnect {
                 String recAddress = rs.getString(3);
                 String recPhone = rs.getString(4);
                 String note = rs.getString(5);
-                double totalMoney = rs.getDouble(6);
+                double totalMoney = 0;
+                String sql = "SELECT B.bid, sum(subtotal) as totalMoney from Bill as B, BillDetail as BD where B.bid = BD.bid and B.bid = '" + bid + "' group by B.bid ";
+                ResultSet rsTotalMoney = this.getData(sql);
+                if (rsTotalMoney.next()) {
+                    totalMoney = rsTotalMoney.getDouble(2);
+                } else {
+                    totalMoney = 0;
+                }
                 int status = rs.getInt(7);
                 String cid = rs.getString(8);
-                Bill bill = new Bill(bid, dateCreate ,recAddress, recPhone, note, totalMoney, status, cid);
+                Bill bill = new Bill(bid, dateCreate, recAddress, recPhone, note, totalMoney, status, cid);
                 vector.add(bill);
                 System.out.println(bill);
             }
@@ -138,7 +145,7 @@ public class DAOBill extends DBConnect {
 
         return vector;
     }
-    
+
     public Vector<Bill> getBill(String sql) {
         Vector<Bill> vector = new Vector<>();
         ResultSet rs = this.getData(sql);
@@ -152,7 +159,7 @@ public class DAOBill extends DBConnect {
                 double totalMoney = rs.getDouble(6);
                 int status = rs.getInt(7);
                 String cid = rs.getString(8);
-                Bill bill = new Bill(bid, dateCreate ,recAddress, recPhone, note, totalMoney, status, cid);
+                Bill bill = new Bill(bid, dateCreate, recAddress, recPhone, note, totalMoney, status, cid);
                 vector.add(bill);
                 System.out.println(bill);
             }
@@ -162,7 +169,7 @@ public class DAOBill extends DBConnect {
 
         return vector;
     }
-    
+
     public int removeBill(String bid) {
         int n = 0;
         String sql = "Delete from Bill where bid ='" + bid + "'";
@@ -183,7 +190,7 @@ public class DAOBill extends DBConnect {
 
         return n;
     }
-    
+
     public static void main(String[] args) {
         DAOBill dao = new DAOBill();
         int n = dao.update(new Bill("B02", "SG", "0352963942", "Very poor", 0, 0, "C02"));

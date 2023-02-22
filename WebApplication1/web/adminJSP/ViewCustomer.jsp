@@ -9,18 +9,29 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>CUSTOMER LIST</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Nav.css " type="text/css">
     </head>
     <body>
-        <%@ page import = "dao.DAOCustomer" %>
         <%@ page import = "entity.Customer, java.util.Vector" %>
         <% 
-            DAOCustomer dao = new DAOCustomer();
-            Vector<Customer> vector = dao.getCustomer("select * from Customer");
+            String title = (String) request.getAttribute("title");
+            Vector<Customer> vector = (Vector<Customer>) request.getAttribute("dataCus");
         %>    
-
+        <div class="topnav">
+            <div><a href="./adminJSP/AdminIndex.jsp">Admin Menu</a></div>
+            <div><a href="./InsertPage/InsertCustomer.jsp">Insert Customer</a></div>
+            <div><a href="CustomerControllerMVC">View All Customer</a></div>
+            <div class="search-box">
+                <form action="CustomerControllerMVC" method="GET">
+                    <label>Search</label>
+                    <input type="text" name="cid" placeholder="Search Customer ID">
+                    <input type="submit" name="go" value="search">
+                </form>
+            </div>
+        </div>        
         <table border = "1">
-            <caption>CUSTOMER LIST</caption>
+            <caption>${title}</caption>
             <tr>
                 <th>CID</th>
                 <th>Customer name</th>
@@ -40,9 +51,10 @@
                 <td><%=temp.getAddress()%> </td>
                 <td><%=temp.getPhone()%> </td>
                 <td><%=(temp.getStatus() == 1 ? "Enable" : "Disable") %> </td>
-                <td><a href="ViewCustomer.jsp?go=update&cid=" <%=temp.getCid()%>">Update</a></td>
-                <td><a href="ViewCustomer.jsp?go=delete&cid=" <%=temp.getCid()%>">Delete</a></td>
+                <td><a href="CustomerControllerMVC?go=update&cid=<%=temp.getCid()%>">Update</a></td>
+                <td><a href="CustomerControllerMVC?go=delete&cid=<%=temp.getCid()%>">Delete</a></td>
             </tr>
             <%}%>    
+         </table>
     </body>
 </html>

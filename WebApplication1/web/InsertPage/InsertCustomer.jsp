@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
+
 <html>
     <head>
         <title>InsertCustomer</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Nav.css " type="text/css">
     </head>
     <body>
-        <form action = "../CustomerControllerURL" method = "POST">
+        <div class="topnav">
+            <div><a href="../adminJSP/AdminIndex.jsp">Admin Menu</a></div>
+            <div><a href="../CustomerControllerMVC">View All Customer</a></div>
+        </div>
+        <form action = "../CustomerControllerMVC" method = "POST">
             <input type="hidden" name="go" value="insert">
             <table>
                 <tr>
-                    <td><label for="cid">CID</label></td>
+                    <td><label for="cid">Customer ID</label></td>
                     <td><input type="text" name="cid" id = "cid"></td>
                 </tr>
                 <tr>
-                    <td><label for="cname">cname</label></td>
+                    <td><label for="cname">Customer Name</label></td>
                     <td><input type="text" name="cname" id = "cname"></td>
                 </tr>
                 <tr>

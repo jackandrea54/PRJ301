@@ -38,8 +38,7 @@
         }
         %> 
         
-        
         <% double x = 10.2, y = 11.2;%>
-        <h2>x + y =  <%=total(x,y)%>)</h2>
+        <h2> x + y =  <%=total(x,y)%></h2>
     </body>
 </html>

@@ -1,16 +1,30 @@
+<%-- 
+    Document   : InsertProduct
+    Created on : Feb 21, 2023, 11:50:59 AM
+    Author     : ADMIN
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
 <html>
     <head>
-        <title>InsertProduct</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Nav.css " type="text/css">
     </head>
     <body>
-        <form action="../ProductControllerURL"  method = "POST">
+        <%@ page import="dao.DAOProduct,dao.DAOCategory,java.sql.ResultSet,java.util.Vector,entity.Product,entity.Category" %>
+        <%
+            DAOProduct daoPro = new DAOProduct();
+            DAOCategory daoCate = new DAOCategory();
+            Vector<Product> vectorPro = daoPro.getAllProduct();
+            Vector<Category> vectorCate = daoCate.getAllCategory();
+        %>
+        <div class="topnav">
+            <div><a href="../adminJSP/AdminIndex.jsp">Admin Menu</a></div>
+            <div><a href="../ProductControllerMVC">View All Product</a></div>
+        </div>
+        <form action="../ProductControllerMVC"  method = "POST">
             <input type="hidden" name="go" value="insert">
             <table>
                 <tr>
@@ -47,11 +61,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <tr>
                     <td><label for="cateID">Category</label></td>
                     <td>
-                        <select name="cateID" id="cateID">
-                            <option value="1">Apple</option>
-                            <option value="2">Samsung</option>
-                            <option value="1006">Replica</option>
-                            <option value="1007">Jordan</option>
+                        <select name="cateID" id="cateID">);
+                            <%for(Category cate : vectorCate) {%>
+                            <option value="<%=cate.getCateID()%>"> <%= cate.getCateName() %> </option>
+                            <%}%>
                         </select>
                     </td>
                 </tr>
@@ -62,7 +75,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 
             </table>
         </form>
-
-
     </body>
 </html>
