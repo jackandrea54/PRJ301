@@ -42,6 +42,7 @@
                 <th>Total Money</th>
                 <th>Status</th>
                 <th>Customer ID</th>
+                <th>Details</th>
                 <th>Update</th>
                 <th>Delete</th>
             </tr>
@@ -56,6 +57,7 @@
                 <td><%=temp.getTotalMoney()%></td>
                 <td><%=(temp.getStatus() == 1 ? "Enable" : "Disable")%></td>
                 <td><%=temp.getCid()%></td>
+                <td><a href="BillDetailControllerMVC?go=search&bid=<%=temp.getBid()%> ">Details</a></td>
                 <td><a href="BillControllerMVC?go=update&bid=<%=temp.getBid()%> ">Update</a></td>
                 <td><a href="BillControllerMVC?go=delete&bid=<%=temp.getBid()%> ">Delete</a></td>
             </tr>
