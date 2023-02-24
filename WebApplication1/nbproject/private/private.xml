@@ -4,9 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/web/adminJSP/AdminIndex.jsp</file>
+            <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/src/java/adminMVCController/BillControllerMVC.java</file>
             <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/web/adminJSP/ViewBillDetail.jsp</file>
             <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/web/adminJSP/UpdateAdmin.jsp</file>
-            <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/web/adminJSP/ViewBill.jsp</file>
+            <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/web/InsertPage/InsertBill.jsp</file>
         </group>
     </open-files>
 </project-private>

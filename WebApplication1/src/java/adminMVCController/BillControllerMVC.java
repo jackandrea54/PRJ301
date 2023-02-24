@@ -52,11 +52,11 @@ public class BillControllerMVC extends HttpServlet {
                 dispath(request, response, "/adminJSP/ViewBill.jsp");
             }
             if (go.equals("insert")) {
-                String id = request.getParameter("id");
+                String id = request.getParameter("bid");
                 String recAddress = request.getParameter("recAddress");
                 String recPhone = request.getParameter("recPhone");
                 String note = request.getParameter("note");
-                int status = Integer.parseInt(request.getParameter("total"));
+                int status = Integer.parseInt(request.getParameter("status"));
                 String cid = request.getParameter("cid");
                 Bill bill = new Bill(id, recAddress, recPhone, note, status, status, cid);
                 dao.AddBill(bill);
