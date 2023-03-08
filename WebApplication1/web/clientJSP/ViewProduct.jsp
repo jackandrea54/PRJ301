@@ -1,17 +1,4 @@
-<%-- 
-    Document   : ViewProduct
-    Created on : Feb 16, 2023, 12:11:08 AM
-    Author     : ADMIN
---%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
         <%@ page import = "entity.Product, java.sql.ResultSet" %>
         
         <%
@@ -31,6 +18,7 @@
                 <th>image</th>
                 <th>Description</th>
                 <th>Status</th>
+                <th>Add to Cart</th>
             </tr>
             <%while (rs.next()) {%>
             <tr>
@@ -42,11 +30,11 @@
                 <td><img src= "<%=rs.getString(5)%>" width="100" height="150"></td>
                 <td><%=rs.getString(6)%></td>
                 <td><%=(rs.getInt(7) == 1 ? "Enable" : "Disable")%></td>
+                <td><a href=./clientJSP/add2Cart.jsp?pid="<%=rs.getString(1)%>">Add</a></td>
             </tr>
             <%}%>
             <tr>
-                <td><a href="ClientController">Product Manage</a></td>
+                <td><a href="ClientController">Product Menu</a></td>
             </tr>
         </table>   
-    </body>
-</html>
+

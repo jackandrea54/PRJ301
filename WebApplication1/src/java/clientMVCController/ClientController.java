@@ -56,8 +56,7 @@ public class ClientController extends HttpServlet {
                 //Chuan bi du lieu cho jsp
                 request.setAttribute("dataMenu", rsMenu);
                 //Call jsp
-                RequestDispatcher dispath = request.getRequestDispatcher("/clientJSP/ClientIndex.jsp");
-                dispath.forward(request, response);
+                dispath(request, response, "./clientJSP/Shop.jsp");
             }
             if (go.equals("displayProductByCategory")) {
                 int cateID = Integer.parseInt(request.getParameter("cateID"));
@@ -72,7 +71,30 @@ public class ClientController extends HttpServlet {
                 RequestDispatcher dispath = request.getRequestDispatcher("/clientJSP/ViewProduct.jsp");
                 dispath.forward(request, response);
             }
+            if (go.equals("search")) {
+                String pname = request.getParameter("pname");
+                String sql = "select * from Product as a join Category as b on a.cateId=b.cateId where pname ='" + pname + "'";
+//                Vector<Product> vector = dao.getProduct(sql);
+                ResultSet rs = dao.getData(sql);
+                //Chuan bi du lieu cho jsp
+                request.setAttribute("dataPro", rs);
+//              //Data for menu
+                String sqlMenu = "select * from Category";
+                ResultSet rsMenu = dao.getData(sqlMenu);
+                //Chuan bi du lieu cho jsp
+                request.setAttribute("dataMenu", rsMenu);
+//                //Run
+//                dispath.forward(request, response);
+                dispath(request, response, "./clientJSP/Shop.jsp");
+            }
         }
+    }
+    
+    void dispath(HttpServletRequest request, HttpServletResponse response, String url)
+            throws ServletException, IOException {
+        RequestDispatcher disp = request.getRequestDispatcher(url);
+        //run
+        disp.forward(request, response);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

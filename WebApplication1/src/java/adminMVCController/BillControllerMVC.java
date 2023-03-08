@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -40,78 +41,81 @@ public class BillControllerMVC extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOBill dao = new DAOBill();
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String go = request.getParameter("go");
-            if (go == null) {
-                go = "listAll";
-            }
-            if (go.equals("listAll")) {
-                request.setAttribute("dataBill", dao.getAllBill());
-                request.setAttribute("title", "List of Bill");
-                dispath(request, response, "/adminJSP/ViewBill.jsp");
-            }
-            if (go.equals("insert")) {
-                String id = request.getParameter("bid");
-                String recAddress = request.getParameter("recAddress");
-                String recPhone = request.getParameter("recPhone");
-                String note = request.getParameter("note");
-                int status = Integer.parseInt(request.getParameter("status"));
-                String cid = request.getParameter("cid");
-                Bill bill = new Bill(id, recAddress, recPhone, note, status, status, cid);
-                dao.AddBill(bill);
-                dispath(request, response, "BillControllerMVC?go=listAll");
-            }
-            if (go.equals("delete")) {
-                String bid = request.getParameter("bid");
-                dao.removeBill(bid);
-                dispath(request, response, "BillControllerMVC?go=listAll");
-            }
-            if (go.equals("update")) {
-                String submit = request.getParameter("submit");
-                if (submit == null) {
-                    String bid = request.getParameter("bid");
-                    String sql = "select * from Bill where bid = '" + bid + "' ";
-                    Vector<Bill> vector = dao.getBill(sql);
-                    Bill bill = vector.get(0);
-                    request.setAttribute("dataBill", bill);
-                    dispath(request, response, "/adminJSP/UpdateBill.jsp");
-                } else {
-                    String bid = request.getParameter("bid");
+        HttpSession session = request.getSession();
+        if (session.getAttribute("admin") != null) {
+            try ( PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                String go = request.getParameter("go");
+                if (go == null) {
+                    go = "listAll";
+                }
+                if (go.equals("listAll")) {
+                    request.setAttribute("dataBill", dao.getAllBill());
+                    request.setAttribute("title", "List of Bill");
+                    dispath(request, response, "/adminJSP/ViewBill.jsp");
+                }
+                if (go.equals("insert")) {
+                    String id = request.getParameter("bid");
                     String recAddress = request.getParameter("recAddress");
                     String recPhone = request.getParameter("recPhone");
                     String note = request.getParameter("note");
-                    double totalMoney = 0;
-                    String sql = "SELECT B.bid, sum(subtotal) as totalMoney from Bill as B, BillDetail as BD where B.bid = BD.bid and B.bid = '" + bid + "' group by B.bid ";
-                    ResultSet rs = dao.getData(sql);
-                    if (rs.next()) {
-                        totalMoney = rs.getDouble(2);
-                    } else {
-                        totalMoney = 0;
-                    }
                     int status = Integer.parseInt(request.getParameter("status"));
                     String cid = request.getParameter("cid");
-                    Bill bill = new Bill(bid, recAddress, recPhone, note, totalMoney, status, cid);
-                    int n = dao.update(bill);
-                    if (n > 0) {
-                        out.println("Updated");
-                    }
+                    Bill bill = new Bill(id, recAddress, recPhone, note, status, status, cid);
+                    dao.AddBill(bill);
                     dispath(request, response, "BillControllerMVC?go=listAll");
                 }
-            }
-            if (go.equals("search")) {
-                String bid = request.getParameter("bid");
-                String sql = "select * from Bill  where bid ='" + bid + "'";
-                Vector<Bill> vector = dao.getBill(sql);
-                String titleTable = "List of Bill";
-                //Chuan bi du lieu cho jsp
-                request.setAttribute("dataBill", vector);
-                request.setAttribute("title", titleTable);
-                dispath(request, response, "/adminJSP/ViewBill.jsp");
-            }
+                if (go.equals("delete")) {
+                    String bid = request.getParameter("bid");
+                    dao.removeBill(bid);
+                    dispath(request, response, "BillControllerMVC?go=listAll");
+                }
+                if (go.equals("update")) {
+                    String submit = request.getParameter("submit");
+                    if (submit == null) {
+                        String bid = request.getParameter("bid");
+                        String sql = "select * from Bill where bid = '" + bid + "' ";
+                        Vector<Bill> vector = dao.getBill(sql);
+                        Bill bill = vector.get(0);
+                        request.setAttribute("dataBill", bill);
+                        dispath(request, response, "/adminJSP/UpdateBill.jsp");
+                    } else {
+                        String bid = request.getParameter("bid");
+                        String recAddress = request.getParameter("recAddress");
+                        String recPhone = request.getParameter("recPhone");
+                        String note = request.getParameter("note");
+                        double totalMoney = 0;
+                        String sql = "SELECT B.bid, sum(subtotal) as totalMoney from Bill as B, BillDetail as BD where B.bid = BD.bid and B.bid = '" + bid + "' group by B.bid ";
+                        ResultSet rs = dao.getData(sql);
+                        if (rs.next()) {
+                            totalMoney = rs.getDouble(2);
+                        } else {
+                            totalMoney = 0;
+                        }
+                        int status = Integer.parseInt(request.getParameter("status"));
+                        String cid = request.getParameter("cid");
+                        Bill bill = new Bill(bid, recAddress, recPhone, note, totalMoney, status, cid);
+                        int n = dao.update(bill);
+                        if (n > 0) {
+                            out.println("Updated");
+                        }
+                        dispath(request, response, "BillControllerMVC?go=listAll");
+                    }
+                }
+                if (go.equals("search")) {
+                    String bid = request.getParameter("bid");
+                    String sql = "select * from Bill  where bid ='" + bid + "'";
+                    Vector<Bill> vector = dao.getBill(sql);
+                    String titleTable = "List of Bill";
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataBill", vector);
+                    request.setAttribute("title", titleTable);
+                    dispath(request, response, "/adminJSP/ViewBill.jsp");
+                }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(BillControllerMVC.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(BillControllerMVC.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

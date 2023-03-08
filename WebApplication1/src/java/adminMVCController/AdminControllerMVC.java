@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.util.Vector;
 
@@ -37,61 +38,64 @@ public class AdminControllerMVC extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOAdmin dao = new DAOAdmin();
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String go = request.getParameter("go");
-            //if call servlet direct --> go = null
-            if (go == null) {
-                go = "listAll"; //Default value
-            }
-            if (go.equals("listAll")) {
-                Vector<Admin> vector = dao.getAllAdmin();
-                String titleTable = "List of Admin";
-                //Chuan bi du lieu cho jsp
-                request.setAttribute("dataAdmin", vector);
-                request.setAttribute("title", titleTable);
-                dispath(request, response, "/adminJSP/ViewAdmin.jsp");
-            }
-            if (go.equals("insert")) {
-                String admin = request.getParameter("admin");
-                String password = request.getParameter("password");
-                Admin ad = new Admin(admin, password);
-                dao.AddAdmin(ad);
-                dispath(request, response, "AdminControllerMVC?go=listAll");
-            }
-            if (go.equals("delete")) {
-                String admin = request.getParameter("admin");
-                dao.removeAdmin(admin);
-                dispath(request, response, "AdminControllerMVC?go=listAll");
-            }
-            if (go.equals("update")) {
-                String submit = request.getParameter("submit");
-                if (submit == null) {
-                    String admin = request.getParameter("admin");
-                    String sql = "select * from Admin where admin = '" + admin + "' ";
-                    Vector<Admin> vector = dao.getAdmin(sql);
-                    Admin ad = vector.get(0);
-                    request.setAttribute("dataAdmin", ad);
-                    dispath(request, response, "/adminJSP/UpdateAdmin.jsp");
-                } else {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("admin") != null) {
+            try ( PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                String go = request.getParameter("go");
+                //if call servlet direct --> go = null
+                if (go == null) {
+                    go = "listAll"; //Default value
+                }
+                if (go.equals("listAll")) {
+                    Vector<Admin> vector = dao.getAllAdmin();
+                    String titleTable = "List of Admin";
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataAdmin", vector);
+                    request.setAttribute("title", titleTable);
+                    dispath(request, response, "/adminJSP/ViewAdmin.jsp");
+                }
+                if (go.equals("insert")) {
                     String admin = request.getParameter("admin");
                     String password = request.getParameter("password");
-
                     Admin ad = new Admin(admin, password);
-                    int n = dao.update(ad);
-
+                    dao.AddAdmin(ad);
                     dispath(request, response, "AdminControllerMVC?go=listAll");
                 }
-            }
-            if (go.equals("search")) {
-                String admin = request.getParameter("admin");
-                String sql = "select * from Admin  where admin ='" + admin + "'";
-                Vector<Admin> vector = dao.getAdmin(sql);
-                String titleTable = "List of Admin";
-                //Chuan bi du lieu cho jsp
-                request.setAttribute("dataAdmin", vector);
-                request.setAttribute("title", titleTable);
-                dispath(request, response, "/adminJSP/ViewAdmin.jsp");
+                if (go.equals("delete")) {
+                    String admin = request.getParameter("admin");
+                    dao.removeAdmin(admin);
+                    dispath(request, response, "AdminControllerMVC?go=listAll");
+                }
+                if (go.equals("update")) {
+                    String submit = request.getParameter("submit");
+                    if (submit == null) {
+                        String admin = request.getParameter("admin");
+                        String sql = "select * from Admin where admin = '" + admin + "' ";
+                        Vector<Admin> vector = dao.getAdmin(sql);
+                        Admin ad = vector.get(0);
+                        request.setAttribute("dataAdmin", ad);
+                        dispath(request, response, "/adminJSP/UpdateAdmin.jsp");
+                    } else {
+                        String admin = request.getParameter("admin");
+                        String password = request.getParameter("password");
+
+                        Admin ad = new Admin(admin, password);
+                        int n = dao.update(ad);
+
+                        dispath(request, response, "AdminControllerMVC?go=listAll");
+                    }
+                }
+                if (go.equals("search")) {
+                    String admin = request.getParameter("admin");
+                    String sql = "select * from Admin  where admin ='" + admin + "'";
+                    Vector<Admin> vector = dao.getAdmin(sql);
+                    String titleTable = "List of Admin";
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataAdmin", vector);
+                    request.setAttribute("title", titleTable);
+                    dispath(request, response, "/adminJSP/ViewAdmin.jsp");
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.util.Vector;
 
@@ -38,60 +39,28 @@ public class ProductControllerMVC extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             DAOProduct dao = new DAOProduct();
-            String go = request.getParameter("go");
-            if (go == null) {
-                go = "listAll"; // default value
-            }
-            if (go.equals("listAll")) {
-                String sql = "select * from Product as a join Category "
-                        + " as b on a.cateId=b.cateId";
+            HttpSession session = request.getSession();
+            if (session.getAttribute("admin") != null) {
+                String go = request.getParameter("go");
+                if (go == null) {
+                    go = "listAll"; // default value
+                }
+                if (go.equals("listAll")) {
+                    String sql = "select * from Product as a join Category "
+                            + " as b on a.cateId=b.cateId";
 //                Vector<Product> vector = dao.getProduct(sql);
-                ResultSet rs = dao.getData(sql);
-                String titleTable = "List of Product";
-                //Chuan bi du lieu cho jsp
-                request.setAttribute("dataPro", rs);
-                request.setAttribute("title", titleTable);
+                    ResultSet rs = dao.getData(sql);
+                    String titleTable = "List of Product";
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataPro", rs);
+                    request.setAttribute("title", titleTable);
 //                //Call jsp (khong dung sendDirect duoc vi no khong truyen duoc doi tuong)
 //                RequestDispatcher dispath = request.getRequestDispatcher("/adminJSP/ViewProduct.jsp");
 //                //Run
 //                dispath.forward(request, response);
-                dispath(request, response, "/adminJSP/ViewProduct.jsp");
-            }
-            if (go.equals("insert")) {
-                String pid = request.getParameter("pid");
-                String pname = request.getParameter("pname");
-                double price = Double.parseDouble(request.getParameter("price"));
-                int quantity = Integer.parseInt(request.getParameter("quantity"));
-                String image = request.getParameter("image");
-                String description = request.getParameter("description");
-                int status = Integer.parseInt(request.getParameter("status"));
-                int cateID = Integer.parseInt(request.getParameter("cateID"));
-
-                Product prod = new Product(pid, pname, quantity, price, image, description, status, cateID);
-                int n = dao.AddProduct(prod);
-                if (n > 0) {
-                    out.println("Inserted");
+                    dispath(request, response, "/adminJSP/ViewProduct.jsp");
                 }
-                dispath(request, response, "ProductControllerMVC?go=listAll");
-            }
-            if (go.equals("delete")) {
-                String pid = request.getParameter("pid");
-                dao.removeProduct(pid);
-                dispath(request, response, "ProductControllerMVC?go=listAll");
-            }
-            if (go.equals("update")) {
-                String submit = request.getParameter("submit");
-                if (submit == null) {
-                    String pid = request.getParameter("pid");
-                    int cateID = Integer.parseInt(request.getParameter("cateID"));
-                    String sql = "select * from Product where pid = '" + pid + "' ";
-                    Vector<Product> vector = dao.getProduct(sql);
-                    ResultSet rs = dao.getData("select * from Category");
-                    request.setAttribute("dataPro", vector);
-                    request.setAttribute("cateID", cateID);
-                    request.setAttribute("dataCate", rs);
-                    dispath(request, response, "/adminJSP/UpdateProduct.jsp");
-                } else {
+                if (go.equals("insert")) {
                     String pid = request.getParameter("pid");
                     String pname = request.getParameter("pname");
                     double price = Double.parseDouble(request.getParameter("price"));
@@ -102,25 +71,60 @@ public class ProductControllerMVC extends HttpServlet {
                     int cateID = Integer.parseInt(request.getParameter("cateID"));
 
                     Product prod = new Product(pid, pname, quantity, price, image, description, status, cateID);
-                    int n = dao.update(prod);
-
+                    int n = dao.AddProduct(prod);
+                    if (n > 0) {
+                        out.println("Inserted");
+                    }
                     dispath(request, response, "ProductControllerMVC?go=listAll");
                 }
-            }
-            if (go.equals("search")) {
-                String pname = request.getParameter("pname");
-                String sql = "select * from Product as a join Category as b on a.cateId=b.cateId where pname ='" + pname + "'";
+                if (go.equals("delete")) {
+                    String pid = request.getParameter("pid");
+                    dao.removeProduct(pid);
+                    dispath(request, response, "ProductControllerMVC?go=listAll");
+                }
+                if (go.equals("update")) {
+                    String submit = request.getParameter("submit");
+                    if (submit == null) {
+                        String pid = request.getParameter("pid");
+                        int cateID = Integer.parseInt(request.getParameter("cateID"));
+                        String sql = "select * from Product where pid = '" + pid + "' ";
+                        Vector<Product> vector = dao.getProduct(sql);
+                        ResultSet rs = dao.getData("select * from Category");
+                        request.setAttribute("dataPro", vector);
+                        request.setAttribute("cateID", cateID);
+                        request.setAttribute("dataCate", rs);
+                        dispath(request, response, "/adminJSP/UpdateProduct.jsp");
+                    } else {
+                        String pid = request.getParameter("pid");
+                        String pname = request.getParameter("pname");
+                        double price = Double.parseDouble(request.getParameter("price"));
+                        int quantity = Integer.parseInt(request.getParameter("quantity"));
+                        String image = request.getParameter("image");
+                        String description = request.getParameter("description");
+                        int status = Integer.parseInt(request.getParameter("status"));
+                        int cateID = Integer.parseInt(request.getParameter("cateID"));
+
+                        Product prod = new Product(pid, pname, quantity, price, image, description, status, cateID);
+                        int n = dao.update(prod);
+
+                        dispath(request, response, "ProductControllerMVC?go=listAll");
+                    }
+                }
+                if (go.equals("search")) {
+                    String pname = request.getParameter("pname");
+                    String sql = "select * from Product as a join Category as b on a.cateId=b.cateId where pname ='" + pname + "'";
 //                Vector<Product> vector = dao.getProduct(sql);
-                ResultSet rs = dao.getData(sql);
-                String titleTable = "List of Product";
-                //Chuan bi du lieu cho jsp
-                request.setAttribute("dataPro", rs);
-                request.setAttribute("title", titleTable);
+                    ResultSet rs = dao.getData(sql);
+                    String titleTable = "List of Product";
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataPro", rs);
+                    request.setAttribute("title", titleTable);
 //                //Call jsp (khong dung sendDirect duoc vi no khong truyen duoc doi tuong)
 //                RequestDispatcher dispath = request.getRequestDispatcher("/adminJSP/ViewProduct.jsp");
 //                //Run
 //                dispath.forward(request, response);
-                dispath(request, response, "/adminJSP/ViewProduct.jsp");
+                    dispath(request, response, "/adminJSP/ViewProduct.jsp");
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
 
 /**
@@ -37,45 +38,20 @@ public class CustomerControllerMVC extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         DAOCustomer dao = new DAOCustomer();
         try ( PrintWriter out = response.getWriter()) {
-            String go = request.getParameter("go");
-            //if call servlet direct --> go = null
-            if (go == null) {
-                go = "listAll"; //Default value
-            }
-            if (go.equals("listAll")) {
-                Vector<Customer> vector = dao.getAllCustomer();
-                request.setAttribute("dataCus", vector);
-                request.setAttribute("title", "List of Customer");
-                dispath(request, response, "/adminJSP/ViewCustomer.jsp");
-            }
-            if (go.equals("insert")) {
-                String cid = request.getParameter("cid");
-                String cname = request.getParameter("cname");
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                String phone = request.getParameter("phone");
-                int status = Integer.parseInt(request.getParameter("status"));
-                Customer cus = new Customer(cid, cname, username, password, phone, phone, status);
-                int n = dao.AddCustomer(cus);
-                dispath(request, response, "CustomerControllerMVC?go=listAll");
-            }
-            
-            if (go.equals("delete")) {
-                String cid = request.getParameter("cid");
-                dao.removeCustomer(cid);
-                dispath(request, response, "CustomerControllerMVC?go=listAll");
-            }
-
-            if (go.equals("update")) {
-                //Check hien thi form hay update bang submit
-                String submit = request.getParameter("submit");
-                if (submit == null) { // hien thi form chua submit
-                    String cid = request.getParameter("cid");
-                    Vector<Customer> vec = dao.getCustomer("select * from Customer where cid ='" + cid + "'");
-                    Customer cus = vec.get(0);
-                    request.setAttribute("dataCus", cus);
-                    dispath(request, response, "/adminJSP/UpdateCustomer.jsp");
-                } else {// da submit
+            HttpSession session = request.getSession();
+            if (session.getAttribute("admin") != null) {
+                String go = request.getParameter("go");
+                //if call servlet direct --> go = null
+                if (go == null) {
+                    go = "listAll"; //Default value
+                }
+                if (go.equals("listAll")) {
+                    Vector<Customer> vector = dao.getAllCustomer();
+                    request.setAttribute("dataCus", vector);
+                    request.setAttribute("title", "List of Customer");
+                    dispath(request, response, "/adminJSP/ViewCustomer.jsp");
+                }
+                if (go.equals("insert")) {
                     String cid = request.getParameter("cid");
                     String cname = request.getParameter("cname");
                     String username = request.getParameter("username");
@@ -83,30 +59,58 @@ public class CustomerControllerMVC extends HttpServlet {
                     String phone = request.getParameter("phone");
                     int status = Integer.parseInt(request.getParameter("status"));
                     Customer cus = new Customer(cid, cname, username, password, phone, phone, status);
-                    int n = dao.updateCustomer(cus);
+                    int n = dao.AddCustomer(cus);
                     dispath(request, response, "CustomerControllerMVC?go=listAll");
                 }
-            }
-            
-            if (go.equals("search")) {
-                String cid = request.getParameter("cid");
-                String sql = "select * from Customer where cid ='" + cid + "'";
-                Vector<Customer> vector = dao.getCustomer(sql);
-                String titleTable = "List of Customer";
-                //Chuan bi du lieu cho jsp
-                request.setAttribute("dataCus", vector);
-                request.setAttribute("title", titleTable);
-                dispath(request, response, "/adminJSP/ViewCustomer.jsp");
+
+                if (go.equals("delete")) {
+                    String cid = request.getParameter("cid");
+                    dao.removeCustomer(cid);
+                    dispath(request, response, "CustomerControllerMVC?go=listAll");
+                }
+
+                if (go.equals("update")) {
+                    //Check hien thi form hay update bang submit
+                    String submit = request.getParameter("submit");
+                    if (submit == null) { // hien thi form chua submit
+                        String cid = request.getParameter("cid");
+                        Vector<Customer> vec = dao.getCustomer("select * from Customer where cid ='" + cid + "'");
+                        Customer cus = vec.get(0);
+                        request.setAttribute("dataCus", cus);
+                        dispath(request, response, "/adminJSP/UpdateCustomer.jsp");
+                    } else {// da submit
+                        String cid = request.getParameter("cid");
+                        String cname = request.getParameter("cname");
+                        String username = request.getParameter("username");
+                        String password = request.getParameter("password");
+                        String phone = request.getParameter("phone");
+                        int status = Integer.parseInt(request.getParameter("status"));
+                        Customer cus = new Customer(cid, cname, username, password, phone, phone, status);
+                        int n = dao.updateCustomer(cus);
+                        dispath(request, response, "CustomerControllerMVC?go=listAll");
+                    }
+                }
+
+                if (go.equals("search")) {
+                    String cid = request.getParameter("cid");
+                    String sql = "select * from Customer where cid ='" + cid + "'";
+                    Vector<Customer> vector = dao.getCustomer(sql);
+                    String titleTable = "List of Customer";
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataCus", vector);
+                    request.setAttribute("title", titleTable);
+                    dispath(request, response, "/adminJSP/ViewCustomer.jsp");
+                }
             }
         }
     }
 
-    void dispath(HttpServletRequest request, HttpServletResponse response, String url) 
-            throws ServletException, IOException{
+    void dispath(HttpServletRequest request, HttpServletResponse response, String url)
+            throws ServletException, IOException {
         RequestDispatcher disp = request.getRequestDispatcher(url);
         disp.forward(request, response);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

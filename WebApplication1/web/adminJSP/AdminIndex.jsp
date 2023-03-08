@@ -3,7 +3,11 @@
     Created on : Feb 21, 2023, 12:08:51 PM
     Author     : ADMIN
 --%>
-
+<%if (session.getAttribute("admin") == null) {
+    out.print("YOU ARE NOT ALLOWED TO BE HERE, TURN BACK IMMEDIATELY, "
+    + "\nWE HAVE CONTACT YOUR LOCAL OFFICAL AUTHORITY");
+%>
+<%}else{%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -49,3 +53,4 @@
     </body>
 </body>
 </html>
+<%}%>

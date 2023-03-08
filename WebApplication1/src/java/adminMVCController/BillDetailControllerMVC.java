@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
 
 /**
@@ -40,82 +41,84 @@ public class BillDetailControllerMVC extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             DAOBillDetail dao = new DAOBillDetail();
-            String go = request.getParameter("go");
-            if (go == null) {
-                go = "listAll"; //Default value
-            }
-            if (go.equals("listAll")) {
-                request.setAttribute("dataBillDe", dao.getAllBillDetail());
-                request.setAttribute("title", "List of Bill Detail");
-                dispath(request, response, "/adminJSP/ViewBillDetail.jsp");
-            }
-            if (go.equals("insert")) {
-                String bid = request.getParameter("bid");
-                String pid = request.getParameter("pid");
-                int buyQuantity = Integer.parseInt(request.getParameter("buyQuantity"));
-                //Get price then add
-                DAOProduct daoPro = new DAOProduct();
-                Vector<Product> vec = daoPro.getProduct("select * from Product where  pid = '" + pid + "'");
-                try {
-                    Product product = vec.get(0); //try catch vi cai nay de bi out of index do không tôn tai product nào
-                    double buyPrice = product.getPrice();
-                    BillDetail billDetail = new BillDetail(bid, pid, buyQuantity, buyPrice, buyQuantity * buyPrice);
-                    int n = dao.AddBillDetail(billDetail);
-                    dispath(request, response, "BillDetailControllerURL");
-                } catch (Exception e) {
-                    out.print(e);
-                    dispath(request, response, "BillDetailControllerURL");
+            HttpSession session = request.getSession();
+            if (session.getAttribute("admin") != null) {
+                String go = request.getParameter("go");
+                if (go == null) {
+                    go = "listAll"; //Default value
                 }
-            }
-            
-            
-            if (go.equals("delete")) {
-                String bid = request.getParameter("bid");
-                String pid = request.getParameter("pid");
-                dao.removeBillDetail(bid, pid);
-                dispath(request, response, "BillDetailControllerURL");
-            }
-            if (go.equals("update")) {
-                //Check hien thi form hay update bang submit
-                String submit = request.getParameter("submit");
-                if (submit == null) { // hien thi form chua submit
-                    String bid = request.getParameter("bid");
-                    String pid = request.getParameter("pid");
-                    Vector<BillDetail> vec = dao.getBillDetail("select * from BillDetail where  bid='" + bid + "' and pid = '" + pid + "'");
-                    BillDetail billDetail = vec.get(0);
-                    request.setAttribute("dataBillDe", billDetail);
-                    dispath(request, response, "/adminJSP/UpdateBillDetail.jsp");
-                } else {
+                if (go.equals("listAll")) {
+                    request.setAttribute("dataBillDe", dao.getAllBillDetail());
+                    request.setAttribute("title", "List of Bill Detail");
+                    dispath(request, response, "/adminJSP/ViewBillDetail.jsp");
+                }
+                if (go.equals("insert")) {
                     String bid = request.getParameter("bid");
                     String pid = request.getParameter("pid");
                     int buyQuantity = Integer.parseInt(request.getParameter("buyQuantity"));
                     //Get price then add
                     DAOProduct daoPro = new DAOProduct();
                     Vector<Product> vec = daoPro.getProduct("select * from Product where  pid = '" + pid + "'");
-                    Product product = vec.get(0);
-                    double buyPrice = product.getPrice();
-                    BillDetail billDetail = new BillDetail(bid, pid, buyQuantity, buyPrice, buyQuantity * buyPrice);
-                    
-                    int n = dao.update(billDetail);
-                    if (n > 0) {
-                        out.println("updated");
+                    try {
+                        Product product = vec.get(0); //try catch vi cai nay de bi out of index do không tôn tai product nào
+                        double buyPrice = product.getPrice();
+                        BillDetail billDetail = new BillDetail(bid, pid, buyQuantity, buyPrice, buyQuantity * buyPrice);
+                        int n = dao.AddBillDetail(billDetail);
+                        dispath(request, response, "BillDetailControllerURL");
+                    } catch (Exception e) {
+                        out.print(e);
+                        dispath(request, response, "BillDetailControllerURL");
                     }
+                }
+
+                if (go.equals("delete")) {
+                    String bid = request.getParameter("bid");
+                    String pid = request.getParameter("pid");
+                    dao.removeBillDetail(bid, pid);
                     dispath(request, response, "BillDetailControllerURL");
                 }
-            }
-            if (go.equals("search")) {
-                String bid = request.getParameter("bid");
-                String sql = "select * from BillDetail where bid ='" + bid + "'";
-                Vector<BillDetail> vector = dao.getBillDetail(sql);
-                String titleTable = "List of Bill Detail";
-                //Chuan bi du lieu cho jsp
-                request.setAttribute("dataBillDe", vector);
-                request.setAttribute("title", titleTable);
-                dispath(request, response, "/adminJSP/ViewBillDetail.jsp");
+                if (go.equals("update")) {
+                    //Check hien thi form hay update bang submit
+                    String submit = request.getParameter("submit");
+                    if (submit == null) { // hien thi form chua submit
+                        String bid = request.getParameter("bid");
+                        String pid = request.getParameter("pid");
+                        Vector<BillDetail> vec = dao.getBillDetail("select * from BillDetail where  bid='" + bid + "' and pid = '" + pid + "'");
+                        BillDetail billDetail = vec.get(0);
+                        request.setAttribute("dataBillDe", billDetail);
+                        dispath(request, response, "/adminJSP/UpdateBillDetail.jsp");
+                    } else {
+                        String bid = request.getParameter("bid");
+                        String pid = request.getParameter("pid");
+                        int buyQuantity = Integer.parseInt(request.getParameter("buyQuantity"));
+                        //Get price then add
+                        DAOProduct daoPro = new DAOProduct();
+                        Vector<Product> vec = daoPro.getProduct("select * from Product where  pid = '" + pid + "'");
+                        Product product = vec.get(0);
+                        double buyPrice = product.getPrice();
+                        BillDetail billDetail = new BillDetail(bid, pid, buyQuantity, buyPrice, buyQuantity * buyPrice);
+
+                        int n = dao.update(billDetail);
+                        if (n > 0) {
+                            out.println("updated");
+                        }
+                        dispath(request, response, "BillDetailControllerURL");
+                    }
+                }
+                if (go.equals("search")) {
+                    String bid = request.getParameter("bid");
+                    String sql = "select * from BillDetail where bid ='" + bid + "'";
+                    Vector<BillDetail> vector = dao.getBillDetail(sql);
+                    String titleTable = "List of Bill Detail";
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataBillDe", vector);
+                    request.setAttribute("title", titleTable);
+                    dispath(request, response, "/adminJSP/ViewBillDetail.jsp");
+                }
             }
         }
     }
-    
+
     void dispath(HttpServletRequest request, HttpServletResponse response, String url)
             throws ServletException, IOException {
         RequestDispatcher disp = request.getRequestDispatcher(url);

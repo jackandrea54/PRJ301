@@ -36,6 +36,7 @@
                 <th>CID</th>
                 <th>Customer name</th>
                 <th>Username</th>
+                <th>Password</th>
                 <th>Address</th>
                 <th>Phone</th>
                 <th>Status</th>
@@ -48,6 +49,7 @@
                 <td><%=temp.getCid()%></td>
                 <td><%=temp.getCname()%></td>
                 <td><%=temp.getUsername()%> </td>
+                <td><%=temp.getPassword()%> </td>
                 <td><%=temp.getAddress()%> </td>
                 <td><%=temp.getPhone()%> </td>
                 <td><%=(temp.getStatus() == 1 ? "Enable" : "Disable") %> </td>
