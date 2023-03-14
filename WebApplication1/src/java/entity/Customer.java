@@ -14,7 +14,18 @@ public class Customer {
 
     public Customer() {
     }
+    
+    //For insert
+    public Customer(String cname, String username, String password, String address, String phone, int status) {
+        this.cname = cname;
+        this.username = username;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.status = status;
+    }
 
+    //For view and update
     public Customer(String cid, String cname, String username, String password, String address, String phone, int status) {
         this.cid = cid;
         this.cname = cname;

@@ -16,10 +16,6 @@
             <input type="hidden" name="go" value="insert">
             <table>
                 <tr>
-                    <td><label for="cid">Customer ID</label></td>
-                    <td><input type="text" name="cid" id = "cid"></td>
-                </tr>
-                <tr>
                     <td><label for="cname">Customer Name</label></td>
                     <td><input type="text" name="cname" id = "cname"></td>
                 </tr>

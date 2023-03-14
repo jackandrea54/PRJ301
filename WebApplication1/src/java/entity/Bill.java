@@ -23,8 +23,19 @@ public class Bill {
     }
     
     //For insert
+    public Bill(String recAddress, String recPhone, String note, double totalMoney, int status, String cid) {
+        this.recAddress = recAddress;
+        this.recPhone = recPhone;
+        this.note = note;
+        this.totalMoney = totalMoney;
+        this.status = status;
+        this.cid = cid;
+    }
+    
+    //For update
     public Bill(String bid, String recAddress, String recPhone, String note, double totalMoney, int status, String cid) {
         this.bid = bid;
+        this.dateCreate = dateCreate;
         this.recAddress = recAddress;
         this.recPhone = recPhone;
         this.note = note;
@@ -33,7 +44,7 @@ public class Bill {
         this.cid = cid;
     }
 
-    //For update
+    //For view
     public Bill(String bid, String dateCreate, String recAddress, String recPhone, String note, double totalMoney, int status, String cid) {
         this.bid = bid;
         this.dateCreate = dateCreate;

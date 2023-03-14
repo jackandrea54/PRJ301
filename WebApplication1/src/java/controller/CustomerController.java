@@ -43,14 +43,13 @@ public class CustomerController extends HttpServlet {
             }
 
             if (go.equals("insert")) {
-                String cid = request.getParameter("cid");
                 String cname = request.getParameter("cname");
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
                 String phone = request.getParameter("phone");
                 int status = Integer.parseInt(request.getParameter("status"));
 
-                Customer cus = new Customer(cid, cname, username, password, phone, phone, status);
+                Customer cus = new Customer(cname, username, password, phone, phone, status);
                 int n = dao.AddCustomer(cus);
                 if (n > 0) {
                     out.print("Inserted");

@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Downy Shoes an Ecommerce Category Bootstrap Responsive Website Template | Shop :: w3layouts</title>
+        <title> Shop Product</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="keywords" content="Downy Shoes Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -565,6 +565,7 @@
     <!-- //footer -->
     <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
     <!-- js -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
     <!-- //js -->
     <!-- cart-js -->
@@ -584,14 +585,7 @@
         });
     </script>
     <!-- //cart-js -->
-    <!-- Add to session -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function addToSession(data) {
-            $.post("./clientJSP/add2Cart.jsp", { "pid" : data });
-        }
-    </script>
-    <!-- //Add to session -->
+    
     <!-- /nav -->
     <script src="${pageContext.request.contextPath}/js/modernizr-2.6.2.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/classie.js"></script>
@@ -635,7 +629,14 @@
     </script>
     <!-- //end-smoth-scrolling -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-3.1.1.min.js"></script>
-
+    <!-- Add to session -->
+    
+    <script>
+        function addToSession(data) {
+            $.post("CartController?go=add", { "pid" : data });
+        }
+    </script>
+    <!-- //Add to session -->
 
 </body>
 </html>

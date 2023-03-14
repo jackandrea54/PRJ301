@@ -137,7 +137,7 @@ public class DAOBillDetail extends DBConnect {
 
     public int removeBillDetail(String bid, String pid) {
         int n = 0;
-        String sql = "Delete from BillDetail where bid = '" + bid + "' and pid ='" + pid + "'";
+        String sql = "Delete from BillDetail where bid = " + bid + " and pid ='" + pid + "'";
         try {
                 Statement state = conn.createStatement();
                 n = state.executeUpdate(sql);
@@ -150,7 +150,7 @@ public class DAOBillDetail extends DBConnect {
     
     public static void main(String[] args) {
         DAOBillDetail dao = new DAOBillDetail();
-        int n = dao.AddBillDetail(new BillDetail("B52", "P2", 1, 12000, 12000));
+        int n = dao.AddBillDetail(new BillDetail("1", "P2", 1, 12000, 12000));
         if (n > 0) {
             System.out.println("updated");
         }

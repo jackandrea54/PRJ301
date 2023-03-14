@@ -16,10 +16,6 @@
             <input type="hidden" name="go" value="insert">
             <table>
                 <tr>
-                    <td><label for="bid">Bill ID</label></td>
-                    <td><input type="text" name="bid" id = "bid"></td>
-                </tr>
-                <tr>
                     <td><label for="recAddress">Address</label></td>
                     <td><input type="text" name="recAddress" id = "recAddress"></td>
                 </tr>

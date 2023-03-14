@@ -39,6 +39,7 @@ public class CustomerControllerMVC extends HttpServlet {
         DAOCustomer dao = new DAOCustomer();
         try ( PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(3600);
             if (session.getAttribute("admin") != null) {
                 String go = request.getParameter("go");
                 //if call servlet direct --> go = null
@@ -52,14 +53,20 @@ public class CustomerControllerMVC extends HttpServlet {
                     dispath(request, response, "/adminJSP/ViewCustomer.jsp");
                 }
                 if (go.equals("insert")) {
-                    String cid = request.getParameter("cid");
                     String cname = request.getParameter("cname");
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
+                    String address = request.getParameter("address");
                     String phone = request.getParameter("phone");
-                    int status = Integer.parseInt(request.getParameter("status"));
-                    Customer cus = new Customer(cid, cname, username, password, phone, phone, status);
+                    int status = 0;
+                    try {
+                        status = Integer.parseInt(request.getParameter("status"));
+                    } catch (Exception e) {
+                        response.sendRedirect("./InsertPage/InsertCustomer.jsp");
+                    }
+                    Customer cus = new Customer(cname, username, password, address, phone, status);
                     int n = dao.AddCustomer(cus);
+                    System.out.println(n);
                     dispath(request, response, "CustomerControllerMVC?go=listAll");
                 }
 

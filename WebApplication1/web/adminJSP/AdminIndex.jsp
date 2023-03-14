@@ -25,11 +25,12 @@
             }
 
             a:hover, a:active {
-                background-color: red;
+                background-color: orange;
             }
         </style>
     </head>
     <body>
+        
         <div style="display: flex; justify-content: space-evenly">
             <p>
                 <a href="../AdminControllerMVC?go=listAll">Show Admin</a>
@@ -49,7 +50,12 @@
             <p>
                 <a href="../ProductControllerMVC?go=listAll">Show Product </a>
             </p>
+            <span>
+                <a href='../LoginRegisterServlet?go=logout' style="color: white;">Logout</a> 
+            </span> 
         </div>
+          
+        
     </body>
 </body>
 </html>

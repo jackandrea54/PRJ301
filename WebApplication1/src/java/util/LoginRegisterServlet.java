@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -42,6 +43,7 @@ public class LoginRegisterServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             DAOCustomer dao = new DAOCustomer();
             HttpSession session = request.getSession();
+            System.out.println("Session created at: " + new Date(session.getCreationTime()));
             String go = request.getParameter("go");
             if (go.equals("login")) {
                 String username = request.getParameter("username");
@@ -53,10 +55,9 @@ public class LoginRegisterServlet extends HttpServlet {
                     sql = "select * from Admin where admin ='" + username + "' and password = '" + password + "'";
                     Vector<Admin> vecAd = daoAdmin.getAdmin(sql);
                     if (vecAd.size() == 0) {
-                        request.setAttribute("msgResponse", "Login failed: wrong login information");
-                        System.out.println("Login fail");
-                        dispath(request, response, "Login.jsp");
-                    }else{
+                        response.sendRedirect("./Login.jsp?msg=fail");
+//                        dispath(request, response, "Login.jsp");
+                    } else {
                         Admin ad = vecAd.get(0);
                         session.setAttribute("admin", ad.getAdmin());
                         response.sendRedirect("./adminJSP/AdminIndex.jsp");
@@ -65,13 +66,24 @@ public class LoginRegisterServlet extends HttpServlet {
                     Customer cus = vector.get(0);
                     session.setAttribute("cid", cus.getCid());
                     session.setAttribute("username", cus.getUsername());
-                    System.out.println(session.getAttribute("username"));
                     response.sendRedirect("ClientController");
                 }
             }
             if (go.equals("register")) {
+                String cname = request.getParameter("cname");
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
+                String address = request.getParameter("address");
+                String phone = request.getParameter("phone");
+                int status = 1;
+                Customer cus = new Customer(cname, username, password, address, phone, status);
+                int n = dao.AddCustomer(cus);
+                if(n < 0){
+                    System.out.println("Register successfully");
+                    response.sendRedirect("./Register.jsp?msg=fail");
+                }else{
+                    response.sendRedirect("./Login.jsp");
+                }
             }
             if (go.equals("logout")) {
                 session.invalidate();
@@ -79,9 +91,9 @@ public class LoginRegisterServlet extends HttpServlet {
             }
         }
     }
-    
-    void dispath(HttpServletRequest request, HttpServletResponse response, String url) 
-            throws ServletException, IOException{
+
+    void dispath(HttpServletRequest request, HttpServletResponse response, String url)
+            throws ServletException, IOException {
         RequestDispatcher disp = request.getRequestDispatcher(url);
         disp.forward(request, response);
     }

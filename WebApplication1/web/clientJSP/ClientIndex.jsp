@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>LANDING PAGE</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="keywords" content="Downy Shoes Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -72,11 +73,11 @@
                         <div class = "user-info" >
                             <%if (session.getAttribute("username") == null) {%>
                             <span>
-                                <a href='./Login.jsp' style="color: white;">Login</a>
+                                <a href='../Login.jsp' style="color: white;">Login</a>
                             </span>
                             <i style="color: white;">|</i> 
                             <span>
-                                <a href='./Register.jsp' style="color: white;">Register</a> 
+                                <a href='../Register.jsp' style="color: white;">Register</a> 
                             </span>
 
                             <%}else{%>

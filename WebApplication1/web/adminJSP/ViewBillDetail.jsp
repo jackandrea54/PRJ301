@@ -50,7 +50,7 @@
                     <td><%= temp.getBuyPrice() %></td>
                     <td><%= temp.getSubtotal() %></td>
                     <td><a href="BillDetailControllerMVC?go=update&bid=<%= temp.getBid() %>&pid=<%= temp.getPid() %>">Update</a></td>
-                    <td><a href="BillDetailControllerMVC.jsp?go=delete&bid=<%= temp.getBid() %>&pid=<%= temp.getPid() %>">Delete</a></td>
+                    <td><a href="BillDetailControllerMVC?go=delete&bid=<%= temp.getBid() %>&pid=<%= temp.getPid() %>">Delete</a></td>
                 </tr>
                 <%}%> 
             </table>

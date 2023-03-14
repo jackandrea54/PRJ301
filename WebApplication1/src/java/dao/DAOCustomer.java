@@ -24,14 +24,13 @@ public class DAOCustomer extends DBConnect {
         int n = 0;
         String sql = "USE [SE1704]\n"
                 + "INSERT INTO [Customer]\n"
-                + "           ([cid]\n"
-                + "           ,[cname]\n"
+                + "           ([cname]\n"
                 + "           ,[username]\n"
                 + "           ,[password]\n"
                 + "           ,[address]\n"
                 + "           ,[phone]\n"
                 + "           ,[status])\n"
-                + "     VALUES ('" + cus.getCid() + "','" + cus.getCname() + "','"
+                + "     VALUES ('" + cus.getCname() + "','"
                 + cus.getUsername() + "','" + cus.getPassword() + "','"
                 + cus.getAddress() + "','" + cus.getPhone() + "'," + cus.getStatus() + ")";
 
@@ -42,6 +41,7 @@ public class DAOCustomer extends DBConnect {
             n = state.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
         return n;
     }
@@ -50,24 +50,22 @@ public class DAOCustomer extends DBConnect {
         int n = 0;
         String sql = "USE [SE1704]\n"
                 + "INSERT INTO [Customer]\n"
-                + "           ([cid]\n"
-                + "           ,[cname]\n"
+                + "           ([cname]\n"
                 + "           ,[username]\n"
                 + "           ,[password]\n"
                 + "           ,[address]\n"
                 + "           ,[phone]\n"
                 + "           ,[status])\n"
-                + "     VALUES (?,?,?,?,?,?,?)";
+                + "     VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             //set parameter
-            pre.setString(1, cus.getCid());
-            pre.setString(2, cus.getCname());
-            pre.setString(3, cus.getUsername());
-            pre.setString(4, cus.getPassword());
-            pre.setString(5, cus.getAddress());
-            pre.setString(6, cus.getPhone());
-            pre.setInt(7, cus.getStatus());
+            pre.setString(1, cus.getCname());
+            pre.setString(2, cus.getUsername());
+            pre.setString(3, cus.getPassword());
+            pre.setString(4, cus.getAddress());
+            pre.setString(5, cus.getPhone());
+            pre.setInt(6, cus.getStatus());
             //run
             n = pre.executeUpdate();
 //            pre.setDataType(index?,value);
@@ -242,10 +240,10 @@ public class DAOCustomer extends DBConnect {
 
     public static void main(String[] args) {
         DAOCustomer dao = new DAOCustomer();
-        int n = dao.updateCustomer(new Customer("C03", "John Wick", "ABC1", "012345678", "HN",
-                "0912312414", 0));
+        int n = dao.AddCustomer(new Customer("John Nghia", "nghia1708", "nghia1708", "HN",
+                "0352963942", 1));
         if (n > 0) {
-            System.out.println("Updated");
+            System.out.println("Inserted");
         }
 
         dao.displayAll();

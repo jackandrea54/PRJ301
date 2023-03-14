@@ -40,6 +40,7 @@ public class ProductControllerMVC extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             DAOProduct dao = new DAOProduct();
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(3600);
             if (session.getAttribute("admin") != null) {
                 String go = request.getParameter("go");
                 if (go == null) {

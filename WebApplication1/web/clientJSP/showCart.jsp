@@ -24,7 +24,7 @@
 </table>
 <h2><a href="../ClientController">Items List</h2>
 <br>
-<h2><a href="checkout.jsp">Check-out</h2>
+<h2><a href="../CartController?go=checkout">Check-out</h2>
 
 
 </body>

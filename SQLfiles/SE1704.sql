@@ -1,5 +1,6 @@
 create database SE1704
 use SE1704
+
 create table admin( admin char(30) primary key,
 					password char(32) not null)
 --
@@ -21,7 +22,7 @@ create table Product(
 )
 ---
 create table Customer (
-		cid varchar(30) primary key,
+		cid int identity(1,1) primary key,
 		cname nvarchar(50) not null,
 		username varchar(30) unique,
 		password varchar(32) not null,
@@ -31,18 +32,18 @@ create table Customer (
 )
 ---
 create table Bill(
-		bid varchar(30) primary key,
+		bid int identity(1,1) primary key,
 		dateCreate dateTime default getDate(),
 		recAddress nvarchar(max),
 		recPhone varchar(20),
 		note nvarchar(max),
 		totalMoney money,
 		status int,
-		cid varchar(30) foreign key references Customer(cid)
+		cid int foreign key references Customer(cid)
 )
 --
 create table BillDetail(
-		bid varchar(30) foreign key references Bill(bid),
+		bid int foreign key references Bill(bid),
 		pid varchar(30) foreign key references Product(pid),
 		buyQuantity int,
 		buyPrice money,

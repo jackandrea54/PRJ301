@@ -41,6 +41,7 @@ public class CategoryControllerMVC extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(3600);
             if (session.getAttribute("admin") != null) {
                 String go = request.getParameter("go");
                 //if call servlet direct --> go = null

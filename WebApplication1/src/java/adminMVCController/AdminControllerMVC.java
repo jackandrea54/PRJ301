@@ -39,6 +39,7 @@ public class AdminControllerMVC extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         DAOAdmin dao = new DAOAdmin();
         HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(3600);
         if (session.getAttribute("admin") != null) {
             try ( PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */

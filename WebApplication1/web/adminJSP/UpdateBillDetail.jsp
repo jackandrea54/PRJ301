@@ -23,7 +23,7 @@
             <div><a href="./InsertPage/InsertBillDetail.jsp">Insert Bill Detail</a></div>
             <div><a href="BillDetailControllerMVC">View All Bill Detail</a></div>
         </div>
-        <form action="BillDetailControllerURL"  method = "POST">
+        <form action="BillDetailControllerMVC"  method = "POST">
             <input type="hidden" name="go" value="update">
             <table>
                 <tr>

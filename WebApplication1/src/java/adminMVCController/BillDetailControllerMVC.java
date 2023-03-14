@@ -42,6 +42,7 @@ public class BillDetailControllerMVC extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             DAOBillDetail dao = new DAOBillDetail();
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(3600);
             if (session.getAttribute("admin") != null) {
                 String go = request.getParameter("go");
                 if (go == null) {
@@ -64,10 +65,10 @@ public class BillDetailControllerMVC extends HttpServlet {
                         double buyPrice = product.getPrice();
                         BillDetail billDetail = new BillDetail(bid, pid, buyQuantity, buyPrice, buyQuantity * buyPrice);
                         int n = dao.AddBillDetail(billDetail);
-                        dispath(request, response, "BillDetailControllerURL");
+                        dispath(request, response, "BillDetailControllerMVC?go=listAll");
                     } catch (Exception e) {
                         out.print(e);
-                        dispath(request, response, "BillDetailControllerURL");
+                        dispath(request, response, "BillDetailControllerMVC?go=listAll");
                     }
                 }
 
@@ -75,7 +76,7 @@ public class BillDetailControllerMVC extends HttpServlet {
                     String bid = request.getParameter("bid");
                     String pid = request.getParameter("pid");
                     dao.removeBillDetail(bid, pid);
-                    dispath(request, response, "BillDetailControllerURL");
+                    dispath(request, response, "BillDetailControllerMVC?go=listAll");
                 }
                 if (go.equals("update")) {
                     //Check hien thi form hay update bang submit
@@ -102,7 +103,7 @@ public class BillDetailControllerMVC extends HttpServlet {
                         if (n > 0) {
                             out.println("updated");
                         }
-                        dispath(request, response, "BillDetailControllerURL");
+                        dispath(request, response, "BillDetailControllerMVC?go=listAll");
                     }
                 }
                 if (go.equals("search")) {

@@ -42,6 +42,7 @@ public class BillControllerMVC extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         DAOBill dao = new DAOBill();
         HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(3600);
         if (session.getAttribute("admin") != null) {
             try ( PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
@@ -55,13 +56,12 @@ public class BillControllerMVC extends HttpServlet {
                     dispath(request, response, "/adminJSP/ViewBill.jsp");
                 }
                 if (go.equals("insert")) {
-                    String id = request.getParameter("bid");
                     String recAddress = request.getParameter("recAddress");
                     String recPhone = request.getParameter("recPhone");
                     String note = request.getParameter("note");
                     int status = Integer.parseInt(request.getParameter("status"));
                     String cid = request.getParameter("cid");
-                    Bill bill = new Bill(id, recAddress, recPhone, note, status, status, cid);
+                    Bill bill = new Bill(recAddress, recPhone, note, 0 , status, cid);
                     dao.AddBill(bill);
                     dispath(request, response, "BillControllerMVC?go=listAll");
                 }
