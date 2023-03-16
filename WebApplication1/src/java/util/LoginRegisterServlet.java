@@ -66,7 +66,7 @@ public class LoginRegisterServlet extends HttpServlet {
                     Customer cus = vector.get(0);
                     session.setAttribute("cid", cus.getCid());
                     session.setAttribute("username", cus.getUsername());
-                    response.sendRedirect("ClientController");
+                    response.sendRedirect("shop");
                 }
             }
             if (go.equals("register")) {

@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class DBConnect {
     public Connection conn = null;
     public DBConnect(){
-        this("jdbc:sqlserver://localhost:1433;databaseName=SE1704", "sa", "123456");
+        this("jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=SE1704", "sa", "123456");
 //        try {
 //            //Goi driver
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

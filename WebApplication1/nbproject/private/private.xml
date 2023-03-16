@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/web/clientJSP/Shop.jsp</file>
-            <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/web/clientJSP/add2Cart.jsp</file>
             <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/src/java/clientMVCController/ClientController.java</file>
-            <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/web/clientJSP/ClientIndex.jsp</file>
+            <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/src/java/clientMVCController/CartController.java</file>
+            <file>file:/D:/SLIDES/SPRING2023/PRJ301/Code%20and%20related/WebApplication1/src/java/util/LoginRegisterServlet.java</file>
         </group>
     </open-files>
 </project-private>

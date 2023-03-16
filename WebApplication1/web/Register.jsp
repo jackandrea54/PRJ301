@@ -68,7 +68,7 @@
                             </span>
                         </div>        
                         <div class="wrap-input100 validate-input" data-validate = "Customer name is required">
-                            <input class="input100" type="text" name="cname" >
+                            <input class="input100" type="text" name="cname" required>
                             <span class="focus-input100"></span>
                         </div>
 
@@ -78,7 +78,7 @@
                             </span>
                         </div>
                         <div class="wrap-input100 validate-input" data-validate = "Username is required">
-                            <input class="input100" type="text" name="username" >
+                            <input class="input100" type="text" name="username" required>
                             <span class="focus-input100"></span>
                         </div>
 
@@ -90,7 +90,7 @@
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                            <input class="input100" type="password" name="pass" >
+                            <input class="input100" type="password" name="pass" required>
                             <span class="focus-input100"></span>
                         </div>
 
@@ -100,8 +100,8 @@
                             </span>
 
                         </div>
-                        <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                            <input class="input100" type="password" name="pass" >
+                        <div class="wrap-input100 validate-input" data-validate = "Re-Password is required">
+                            <input class="input100" type="password" name="pass" required>
                             <span class="focus-input100"></span>
                         </div>   
 
@@ -111,7 +111,7 @@
                             </span>
                         </div>        
                         <div class="wrap-input100 validate-input" data-validate = "Address is required">
-                            <input class="input100" type="text" name="address" >
+                            <input class="input100" type="text" name="address" required>
                             <span class="focus-input100"></span>
                         </div>        
 
@@ -121,7 +121,7 @@
                             </span>
                         </div>        
                         <div class="wrap-input100 validate-input" data-validate = "Phone is required">
-                            <input class="input100" type="text" name="phone" >
+                            <input class="input100" type="text" name="phone" required>
                             <span class="focus-input100"></span>
                         </div>        
 

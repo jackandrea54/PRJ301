@@ -19,7 +19,7 @@ import java.sql.ResultSet;
  *
  * @author ADMIN
  */
-@WebServlet(name = "ClientController", urlPatterns = {"/ClientController"})
+@WebServlet(name = "ClientController", urlPatterns = {"/shop"})
 public class ClientController extends HttpServlet {
 
     /**
@@ -73,7 +73,7 @@ public class ClientController extends HttpServlet {
             }
             if (go.equals("search")) {
                 String pname = request.getParameter("pname");
-                String sql = "select * from Product as a join Category as b on a.cateId=b.cateId where pname ='" + pname + "'";
+                String sql = "select a.*, b.cateName from Product as a join Category as b on a.cateId=b.cateId where pname ='" + pname + "'";
 //                Vector<Product> vector = dao.getProduct(sql);
                 ResultSet rs = dao.getData(sql);
                 //Chuan bi du lieu cho jsp

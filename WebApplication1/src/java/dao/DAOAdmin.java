@@ -33,7 +33,7 @@ public class DAOAdmin extends DBConnect {
             state = conn.createStatement();
             n = state.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(DAOBill.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }

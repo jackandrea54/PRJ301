@@ -197,11 +197,12 @@ public class DAOProduct extends DBConnect {
 
     public static void main(String[] args) {
         DAOProduct dao = new DAOProduct();
-        int n = dao.update(new Product("P02", "Nike", 15, 90000,
-                "https://shopgiayreplica.com/wp-content/uploads/2021/04/Jordan-1-Retro-High-Twist-Panda.jpeg",
-                "Very nice shoes", 0, 1));
-        if (n > 0) {
-            System.out.println("UPdated");
-        }
+        System.out.println(dao.getAllProduct());
+//        int n = dao.update(new Product("P02", "Nike", 15, 90000,
+//                "https://shopgiayreplica.com/wp-content/uploads/2021/04/Jordan-1-Retro-High-Twist-Panda.jpeg",
+//                "Very nice shoes", 0, 1));
+//        if (n > 0) {
+//            System.out.println("UPdated");
+//        }
     }
 }

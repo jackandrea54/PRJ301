@@ -76,7 +76,7 @@ public class BillDetailControllerMVC extends HttpServlet {
                     String bid = request.getParameter("bid");
                     String pid = request.getParameter("pid");
                     dao.removeBillDetail(bid, pid);
-                    dispath(request, response, "BillDetailControllerMVC?go=listAll");
+                    dispath(request, response, "BillDetailControllerMVC?go=search&bid="+bid);
                 }
                 if (go.equals("update")) {
                     //Check hien thi form hay update bang submit

@@ -52,8 +52,7 @@
                             <ul>
                                 <li><a href="./ClientIndex.jsp" class="active">Home</a></li>
                                 <li><a href="about.html">About</a></li>
-                                <li><a href="404.html">Team</a></li>
-                                <li><a href="CientController">Shop Now</a></li>
+                                <li><a href="../shop">Shop Now</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
@@ -64,11 +63,11 @@
                     <!-- cart details -->
                     <div class="top_nav_right">
                         <div class="shoecart shoecart2 cart cart box_1">
-                            <form action="#" method="post" class="last">
-                                <input type="hidden" name="cmd" value="_cart">
+                            <input type="hidden" name="cmd" value="_cart">
                                 <input type="hidden" name="display" value="1">
-                                <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-                            </form>
+                                <a href="./checkout.jsp">
+                                    <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                                </a>
                         </div>
                         <div class = "user-info" >
                             <%if (session.getAttribute("username") == null) {%>
@@ -89,7 +88,7 @@
                             </span>
                             <i style="color: white;">|</i> 
                             <span>
-                                <a href='LoginRegisterServlet?go=logout' style="color: white;">Logout</a> 
+                                <a href='../LoginRegisterServlet?go=logout' style="color: white;">Logout</a> 
                             </span>            
                             <%}%>
                         </div>    
@@ -103,8 +102,9 @@
                             </ul>
                         </div>
                         <div id="cd-search" class="cd-search">
-                            <form action="#" method="post">
-                                <input name="Search" type="search" placeholder="Click enter after typing...">
+                            <form action="../shop" method="GET">
+                                <input type="search" placeholder="Click enter after typing..." name="pname" required="">
+                                <input type="submit" name="go" value="search">
                             </form>
                         </div>
                     </div>
@@ -186,7 +186,7 @@
                         <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur.sed quia non numquam eius modi
                             tempora incidunt ut labore et dolore .</p>
                         <div class="shop-button">
-                            <a href="../ClientController">Shop Now</a>
+                            <a href="../shop">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
                         <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur.sed quia non numquam eius modi
                             tempora incidunt ut labore .</p>
                         <div class="shop-button">
-                            <a href="../ClientController">Shop Now</a>
+                            <a href="../shop">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -236,7 +236,7 @@
                         <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur.sed quia non numquam eius modi
                             tempora incidunt ut labore .</p>
                         <div class="shop-button two">
-                            <a href="../ClientController">Shop Now</a>
+                            <a href="../shop">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
     <!-- /Properties -->
     <div class="mid_slider_w3lsagile">
         <div class="col-md-3 mid_slider_text">
-            <h5>Some More Shoes</h5>
+            <h5>Some More Product</h5>
         </div>
         <div class="col-md-9 mid_slider_info">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -266,7 +266,7 @@
                                 <div class="thumbnail"><img src="${pageContext.request.contextPath}/images/g1.jpg" alt="Image" style="max-width:100%;"></div>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-3 slidering">
-                                <div class="thumbnail"><img src="${pageContext.request.contextPath}/images/g2.jpg" alt="Image" style="max-width:100%;"></div>
+                                <div class="thumbnail"><img src="${pageContext.request.contextPath}/images/samsung.jpg" alt="Image" style="max-width:100%;"></div>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-3 slidering">
                                 <div class="thumbnail"><img src="${pageContext.request.contextPath}/images/g3.jpg" alt="Image" style="max-width:100%;"></div>
@@ -342,26 +342,11 @@
     </div>
     <!--//banner -->
 
-    <!-- /newsletter-->
-    <div class="newsletter_w3layouts_agile">
-        <div class="col-sm-6 newsleft">
-            <h3>Sign up for Newsletter !</h3>
-        </div>
-        <div class="col-sm-6 newsright">
-            <form action="#" method="post">
-                <input type="email" placeholder="Enter your email..." name="email" required="">
-                <input type="submit" value="Submit">
-            </form>
-        </div>
-
-        <div class="clearfix"></div>
-    </div>
-    <!-- //newsletter-->
     <!-- footer -->
     <div class="footer_agileinfo_w3">
         <div class="footer_inner_info_w3ls_agileits">
             <div class="col-md-3 footer-left">
-                <h2><a href="index.html"><span>D</span>owny Shoes </a></h2>
+                <h2><a href="index.html"><span>D</span>owny Products </a></h2>
                 <p>Lorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
                 <ul class="social-nav model-3d-0 footer-social social two">
                     <li>
@@ -476,7 +461,7 @@
 <h1><p>Your Last Accessed Time is <%= session.getLastAccessedTime()%>.</p></h1>-->
 <ul>
     <%while (rsMenu.next()) {%> 
-    <li><a href="../ClientController?go=displayProductByCategory&cateID=<%=rsMenu.getInt(1)%>"> <%=rsMenu.getString(2)%> </a></li>
+    <li><a href="../shop?go=displayProductByCategory&cateID=<%=rsMenu.getInt(1)%>"> <%=rsMenu.getString(2)%> </a></li>
         <%}%>
 </ul>   
 <div>
@@ -486,15 +471,15 @@ comment --%>
 
 
 <!-- js -->
-<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <!-- //js -->
 <!-- /nav -->
-<script src="js/modernizr-2.6.2.min.js"></script>
-<script src="js/classie.js"></script>
-<script src="js/demo1.js"></script>
+<script src="${pageContext.request.contextPath}/js/modernizr-2.6.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/classie.js"></script>
+<script src="${pageContext.request.contextPath}/js/demo1.js"></script>
 <!-- //nav -->
 <!-- cart-js -->
-<script src="js/minicart.js"></script>
+<script src="${pageContext.request.contextPath}/js/minicart.js"></script>
 <script>
 shoe.render();
 
@@ -511,9 +496,9 @@ shoe.cart.on('shoe_checkout', function (evt) {
 </script>
 <!-- //cart-js -->
 <!--search-bar-->
-<script src="js/search.js"></script>
+<script src="${pageContext.request.contextPath}/js/search.js"></script>
 <!--//search-bar-->
-<script src="js/responsiveslides.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/responsiveslides.min.js"></script>
 <script>
 $(function () {
     $("#slider4").responsiveSlides({
@@ -533,8 +518,8 @@ $(function () {
 </script>
 <!-- js for portfolio lightbox -->
 <!-- start-smoth-scrolling -->
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/move-top.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/easing.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function ($) {
     $(".scroll").click(function (event) {
@@ -547,6 +532,6 @@ jQuery(document).ready(function ($) {
 </script>
 <!-- //end-smoth-scrolling -->
 
-<script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-3.1.1.min.js"></script>
 </body>
 </html>

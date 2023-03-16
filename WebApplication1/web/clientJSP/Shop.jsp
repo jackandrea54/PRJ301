@@ -59,7 +59,7 @@
                                 <li><a href="./clientJSP/ClientIndex.jsp" class="active">Home</a></li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="404.html">Team</a></li>
-                                <li><a href="shop.html">Shop Now</a></li>
+                                <li><a href="shop">Shop Now</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
@@ -71,11 +71,11 @@
 
                     <div class="top_nav_right">
                         <div class="shoecart shoecart2 cart cart box_1">
-                            <form action="#" method="post" class="last">
                                 <input type="hidden" name="cmd" value="_cart">
                                 <input type="hidden" name="display" value="1">
-                                <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-                            </form>
+                                <a href="./clientJSP/checkout.jsp">
+                                    <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                                </a>
                         </div>
                         <div class = "user-info" >
                             <%if (session.getAttribute("username") == null) {%>
@@ -112,7 +112,7 @@
                     </ul>
                 </div>
                 <div id="cd-search" class="cd-search">
-                    <form action="ClientController" method="GET">
+                    <form action="./shop" method="GET">
                         <input type="search" placeholder="Click enter after typing..." name="pname" required="">
                         <input type="submit" name="go" value="search">
                     </form>
@@ -126,7 +126,7 @@
 
                     <ul class="short">
                         <li><a href="./clientJSP/ClientIndex.jsp">Home</a><i>|</i></li>
-                        <li><a href="ClientController">Shop</a></li>
+                        <li><a href="shop">Shop</a></li>
                     </ul>
                 </div>
             </div>
@@ -144,9 +144,9 @@
                 <div class="side-bar col-md-3">
                     <div class="search-hotel">
                         <h3 class="agileits-sear-head">Search Here..</h3>
-                        <form action="ClientController" method="GET">
+                        <form action="shop" method="GET">
                             <input type="search" placeholder="Product name..." name="pname" required="">
-                            <input type="submit" name="go" value="search">
+                            <input type="submit" name="go" value="">
                         </form>
                     </div>
                     <!-- price range -->
@@ -167,11 +167,11 @@
                     %>
                     <div class="left-side">
                         <h3 class="agileits-sear-head">Category</h3>
-                        <form action="ClientController" method="POST">
+                        <form action="shop" method="get">
                             <ul>
                                 <%while (rsMenu.next()) {%> 
                                 <li>
-                                    <input type="checkbox" class="checked" value="<%=rsMenu.getInt(1)%>">
+                                    <input type="radio" name="cateId" value="<%=rsMenu.getInt(1)%>" checked>
                                     <span class="span"><%=rsMenu.getString(2)%></span>
                                 </li>
                                 <%}%>
@@ -181,61 +181,7 @@
                     <!-- // preference -->
 
 
-                    <!-- deals -->
-                    <div class="deal-leftmk left-side">
-                        <h3 class="agileits-sear-head">Special Deals</h3>
-                        <div class="special-sec1">
-                            <div class="col-xs-4 img-deals">
-                                <img src="${pageContext.request.contextPath}/images/s4.jpg" alt="">
-                            </div>
-                            <div class="col-xs-8 img-deal1">
-                                <h3>Shuberry Heels</h3>
-                                <a href="single.html">$180.00</a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="special-sec1">
-                            <div class="col-xs-4 img-deals">
-                                <img src="${pageContext.request.contextPath}/images/s2.jpg" alt="">
-                            </div>
-                            <div class="col-xs-8 img-deal1">
-                                <h3>Chikku Loafers</h3>
-                                <a href="single.html">$99.00</a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="special-sec1">
-                            <div class="col-xs-4 img-deals">
-                                <img src="${pageContext.request.contextPath}/images/s1.jpg" alt="">
-                            </div>
-                            <div class="col-xs-8 img-deal1">
-                                <h3>Bella Toes</h3>
-                                <a href="single.html">$165.00</a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="special-sec1">
-                            <div class="col-xs-4 img-deals">
-                                <img src="${pageContext.request.contextPath}/images/s5.jpg" alt="">
-                            </div>
-                            <div class="col-xs-8 img-deal1">
-                                <h3>Red Bellies</h3>
-                                <a href="single.html">$225.00</a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="special-sec1">
-                            <div class="col-xs-4 img-deals">
-                                <img src="${pageContext.request.contextPath}/images/s3.jpg" alt="">
-                            </div>
-                            <div class="col-xs-8 img-deal1">
-                                <h3>(SRV) Sneakers</h3>
-                                <a href="single.html">$169.00</a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    <!-- //deals -->
+                    
 
                 </div>
                 <!-- //product left -->
@@ -247,86 +193,47 @@
                         <!-- product-sec1 -->
                         <div class="product-sec1">
                             <!--/mens-->
-                            <%while (rs.next()) {%>
-                            <div class="col-md-4 product-men">
-                                <div class="product-shoe-info shoe" style="margin-top: 10px;">
-                                    <div class="men-pro-item">
-                                        <div class="men-thumb-item">
-                                            <img src="<%=rs.getString(5)%>" alt="" style="height: 260px;">
-                                            <div class="men-cart-pro">
-                                                <div class="inner-men-cart-pro">
-                                                    <a href="single.html" class="link-product-add-cart">Quick View</a>
-                                                </div>
-                                            </div>
-                                            <span class="product-new-top">New</span>
-                                        </div>
-                                        <div class="item-info-product">
-                                            <h4>
-                                                <a href="single.html"><%=rs.getString(2)%></a>
-                                            </h4>
-                                            <div class="info-product-price">
-                                                <div class="grid_meta">
-                                                    <div class="product_price">
-                                                        <div class="grid-price ">
-                                                            <span class="money ">$<%=rs.getString(4)%></span>
+                            <%while (rs.next()){%>
+                                <%if(rs.getInt("status") == 1){%>
+                                    <div class="col-md-4 product-men">
+                                        <div class="product-shoe-info shoe" style="margin-top: 10px;">
+                                            <div class="men-pro-item">
+                                                <div class="men-thumb-item">
+                                                    <img src="<%=rs.getString(5)%>" alt="" style="height: 260px;">
+                                                    <div class="men-cart-pro">
+                                                        <div class="inner-men-cart-pro">
+                                                            <a href="./clientJSP/single.jsp?pid=<%=rs.getString(1)%>" class="link-product-add-cart">Quick View</a>
                                                         </div>
                                                     </div>
+                                                    <span class="product-new-top">New</span>
                                                 </div>
-                                                <div class="shoe single-item hvr-outline-out">
-                                                    <button type="submit" class="shoe-cart pshoe-cart" onclick="addToSession('<%=rs.getString(1)%>')">
-                                                        <i class="fa fa-cart-plus" data-toggle="modal" data-target="#myModal1" style="color:white"></i>
-                                                    </button>
+                                                <div class="item-info-product">
+                                                    <h4>
+                                                        <a href="./clientJSP/single.jsp?pid=<%=rs.getString(1)%>"><%=rs.getString(2)%></a>
+                                                    </h4>
+                                                    <div class="info-product-price">
+                                                        <div class="grid_meta">
+                                                            <div class="product_price">
+                                                                <div class="grid-price ">
+                                                                    <span class="money ">$<%=rs.getString(4)%></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="shoe single-item hvr-outline-out">
+                                                            <button type="submit" class="shoe-cart pshoe-cart" onclick="addToSession('<%=rs.getString(1)%>')">
+                                                                <i class="fa fa-cart-plus" data-toggle="modal" data-target="#myModal1" style="color:white"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="clearfix"></div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                <%}%>
                             <%}%>
 
-                            <div class="col-md-4 product-men">
-                                <div class="product-shoe-info shoe" style="margin-top: 10px;">
-                                    <div class="men-pro-item">
-                                        <div class="men-thumb-item">
-                                            <img src="${pageContext.request.contextPath}/images/s7.jpg" alt="">
-                                            <div class="men-cart-pro">
-                                                <div class="inner-men-cart-pro">
-                                                    <a href="single.html" class="link-product-add-cart">Quick View</a>
-                                                </div>
-                                            </div>
-                                            <span class="product-new-top">New</span>
-                                        </div>
-                                        <div class="item-info-product">
-                                            <h4>
-                                                <a href="single.html">Running Shoes</a>
-                                            </h4>
-                                            <div class="info-product-price">
-                                                <div class="grid_meta">
-                                                    <div class="product_price">
-                                                        <div class="grid-price ">
-                                                            <span class="money ">$875.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="shoe single-item hvr-outline-out">
-                                                    <form action="#" method="post">
-                                                        <input type="hidden" name="cmd" value="_cart">
-                                                        <input type="hidden" name="add" value="1">
-                                                        <input type="hidden" name="shoe_item" value="Running Shoes">
-                                                        <input type="hidden" name="amount" value="875.00">
-                                                        <button type="submit" class="shoe-cart pshoe-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
-
-                                                        <a href="#" data-toggle="modal" data-target="#myModal1"></a>
-                                                    </form>
-
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="clearfix"></div>
 
                         </div>
@@ -349,7 +256,7 @@
         <!-- //top products -->
         <div class="mid_slider_w3lsagile">
             <div class="col-md-3 mid_slider_text">
-                <h5>Some More Shoes</h5>
+                <h5>Some More Product</h5>
             </div>
             <div class="col-md-9 mid_slider_info">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -441,26 +348,12 @@
 
             <div class="clearfix"> </div>
         </div>
-        <!-- /newsletter-->
-        <div class="newsletter_w3layouts_agile">
-            <div class="col-sm-6 newsleft">
-                <h3>Sign up for Newsletter !</h3>
-            </div>
-            <div class="col-sm-6 newsright">
-                <form action="#" method="post">
-                    <input type="email" placeholder="Enter your email..." name="email" required="">
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-
-            <div class="clearfix"></div>
-        </div>
-        <!-- //newsletter-->
+        
         <!-- footer -->
         <div class="footer_agileinfo_w3">
             <div class="footer_inner_info_w3ls_agileits">
                 <div class="col-md-3 footer-left">
-                    <h2><a href="./clientJSP/ClientIndex.jsp"><span>D</span>owny Shoes </a></h2>
+                    <h2><a href="./clientJSP/ClientIndex.jsp"><span>D</span>owny Products </a></h2>
                     <p>Lorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
                     <ul class="social-nav model-3d-0 footer-social social two">
                         <li>
@@ -495,15 +388,11 @@
                             <h4>Our <span>Information</span> </h4>
                             <ul>
                                 <li><a href="./clientJSP/ClientIndex.jsp">Home</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="404.html">Services</a></li>
-                                <li><a href="404.html">Short Codes</a></li>
-                                <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </div>
 
                         <div class="col-md-5 sign-gd-two">
-                            <h4>Store <span>Information</span></h4>
+                            <h4>Web <span>Information</span></h4>
                             <div class="address">
                                 <div class="address-grid">
                                     <div class="address-left">
@@ -511,7 +400,7 @@
                                     </div>
                                     <div class="address-right">
                                         <h6>Phone Number</h6>
-                                        <p>+1 234 567 8901</p>
+                                        <p>+035 296 3942</p>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>
@@ -568,23 +457,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
     <!-- //js -->
-    <!-- cart-js -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/minicart.js"></script>
-    <script>
-        shoe.render();
-
-        shoe.cart.on('shoe_checkout', function (evt) {
-            var items, len, i;
-
-            if (this.subtotal() > 0) {
-                items = this.items();
-
-                for (i = 0, len = items.length; i < len; i++) {
-                }
-            }
-        });
-    </script>
-    <!-- //cart-js -->
+    
     
     <!-- /nav -->
     <script src="${pageContext.request.contextPath}/js/modernizr-2.6.2.min.js"></script>

@@ -55,7 +55,7 @@
                 <td><%=temp.getRecPhone()%></td>
                 <td><%=temp.getNote()%></td>
                 <td><%=temp.getTotalMoney()%></td>
-                <td><%=(temp.getStatus() == 1 ? "Enable" : "Disable")%></td>
+                <td><%=(temp.getStatus() == 1 ? "Process" : (temp.getStatus() == 2 ? "Done" : "Wait"))%></td>
                 <td><%=temp.getCid()%></td>
                 <td><a href="BillDetailControllerMVC?go=search&bid=<%=temp.getBid()%> ">Details</a></td>
                 <td><a href="BillControllerMVC?go=update&bid=<%=temp.getBid()%> ">Update</a></td>
