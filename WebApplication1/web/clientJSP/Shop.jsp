@@ -26,6 +26,7 @@
         <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop.css" type="text/css" media="screen" property="" />
         <link href="${pageContext.request.contextPath}/css/style7.css" rel="stylesheet" type="text/css" media="all" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/checkout.css">
         <!-- Owl-carousel-CSS -->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui1.css">
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -57,10 +58,7 @@
                         <nav>
                             <ul>
                                 <li><a href="./clientJSP/ClientIndex.jsp" class="active">Home</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="404.html">Team</a></li>
                                 <li><a href="shop">Shop Now</a></li>
-                                <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -71,11 +69,11 @@
 
                     <div class="top_nav_right">
                         <div class="shoecart shoecart2 cart cart box_1">
-                                <input type="hidden" name="cmd" value="_cart">
-                                <input type="hidden" name="display" value="1">
-                                <a href="./clientJSP/checkout.jsp">
-                                    <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-                                </a>
+                            <input type="hidden" name="cmd" value="_cart">
+                            <input type="hidden" name="display" value="1">
+                            <a href="./clientJSP/checkout.jsp">
+                                <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                            </a>
                         </div>
                         <div class = "user-info" >
                             <%if (session.getAttribute("username") == null) {%>
@@ -92,7 +90,7 @@
                                 <a href="#" style="color: white;">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     <%=session.getAttribute("username")%>
-                                    </a>
+                                </a>
                             </span>
                             <i style="color: white;">|</i> 
                             <span>
@@ -113,8 +111,8 @@
                 </div>
                 <div id="cd-search" class="cd-search">
                     <form action="./shop" method="GET">
+                        <input type="hidden" name="go" value="search">
                         <input type="search" placeholder="Click enter after typing..." name="pname" required="">
-                        <input type="submit" name="go" value="search">
                     </form>
                 </div>
             </div>
@@ -145,43 +143,38 @@
                     <div class="search-hotel">
                         <h3 class="agileits-sear-head">Search Here..</h3>
                         <form action="shop" method="GET">
+                            <input type="hidden" name="go" value="search">
                             <input type="search" placeholder="Product name..." name="pname" required="">
-                            <input type="submit" name="go" value="">
+                            <input type="submit" value=".">
                         </form>
                     </div>
-                    <!-- price range -->
-                    <div class="range">
-                        <h3 class="agileits-sear-head">Price range</h3>
-                        <ul class="dropdown-menu6">
-                            <li>
 
-                                <div id="slider-range"></div>
-                                <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- //price range -->
                     <!--preference -->
                     <% 
                     ResultSet rsMenu = (ResultSet) request.getAttribute("dataMenu");
                     %>
                     <div class="left-side">
                         <h3 class="agileits-sear-head">Category</h3>
-                        <form action="shop" method="get">
+                        <form action="shop" method="GET">
+                            <input type="hidden" name="go" value="displayProductByCategory">
                             <ul>
                                 <%while (rsMenu.next()) {%> 
                                 <li>
-                                    <input type="radio" name="cateId" value="<%=rsMenu.getInt(1)%>" checked>
+                                    <input type="checkbox" name="cateID" value="<%=rsMenu.getInt(1)%>">
                                     <span class="span"><%=rsMenu.getString(2)%></span>
                                 </li>
                                 <%}%>
                             </ul>
+                            <div class="information-wrapper" style="margin-top: 5em;">
+                                <button type="submit" class= "submit check_out">Filter</button>
+                           </div>
+                            
                         </form>
                     </div>
                     <!-- // preference -->
 
 
-                    
+
 
                 </div>
                 <!-- //product left -->
@@ -194,46 +187,55 @@
                         <div class="product-sec1">
                             <!--/mens-->
                             <%while (rs.next()){%>
-                                <%if(rs.getInt("status") == 1){%>
-                                    <div class="col-md-4 product-men">
-                                        <div class="product-shoe-info shoe" style="margin-top: 10px;">
-                                            <div class="men-pro-item">
-                                                <div class="men-thumb-item">
-                                                    <img src="<%=rs.getString(5)%>" alt="" style="height: 260px;">
-                                                    <div class="men-cart-pro">
-                                                        <div class="inner-men-cart-pro">
-                                                            <a href="./clientJSP/single.jsp?pid=<%=rs.getString(1)%>" class="link-product-add-cart">Quick View</a>
-                                                        </div>
-                                                    </div>
-                                                    <span class="product-new-top">New</span>
-                                                </div>
-                                                <div class="item-info-product">
-                                                    <h4>
-                                                        <a href="./clientJSP/single.jsp?pid=<%=rs.getString(1)%>"><%=rs.getString(2)%></a>
-                                                    </h4>
-                                                    <div class="info-product-price">
-                                                        <div class="grid_meta">
-                                                            <div class="product_price">
-                                                                <div class="grid-price ">
-                                                                    <span class="money ">$<%=rs.getString(4)%></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="shoe single-item hvr-outline-out">
-                                                            <button type="submit" class="shoe-cart pshoe-cart" onclick="addToSession('<%=rs.getString(1)%>')">
-                                                                <i class="fa fa-cart-plus" data-toggle="modal" data-target="#myModal1" style="color:white"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
+                            <%if(rs.getInt("status") == 1){%>
+                            <div class="col-md-4 product-men">
+                                <div class="product-shoe-info shoe" style="margin-top: 10px;">
+                                    <div class="men-pro-item">
+                                        <div class="men-thumb-item">
+                                            <img src="<%=rs.getString(5)%>" alt="" style="height: 260px;">
+                                            <div class="men-cart-pro">
+                                                <div class="inner-men-cart-pro">
+                                                    <a href="./clientJSP/single.jsp?pid=<%=rs.getString(1)%>" class="link-product-add-cart">Quick View</a>
                                                 </div>
                                             </div>
+                                            <span class="product-new-top">New</span>
+                                        </div>
+                                        <div class="item-info-product">
+                                            <h4>
+                                                <a href="./clientJSP/single.jsp?pid=<%=rs.getString(1)%>"><%=rs.getString(2)%></a>
+                                            </h4>
+                                            <div class="info-product-price">
+                                                <div class="grid_meta">
+                                                    <div class="product_price">
+                                                        <div class="grid-price ">
+                                                            <span class="money ">$<%=rs.getString(4)%></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="shoe single-item hvr-outline-out">
+                                                    <button type="submit" class="shoe-cart pshoe-cart" onclick="addToSession('<%=rs.getString(1)%>')">
+                                                        <i class="fa fa-cart-plus" data-toggle="modal" data-target="#myModal1" style="color:white"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="info-product-price" style="margin-top: 3em;">
+                                                <div class="grid_meta" >
+                                                    <div class="product_price">
+                                                        <div class="grid-price ">
+                                                            <span class="money "><%=rs.getString("description")%></span>
+                                                        </div>
+                                                    </div>
+                                                </div>    
+                                            </div>
+                                            <div class="clearfix"></div>
                                         </div>
                                     </div>
-                                <%}%>
+                                </div>
+                            </div>
+                            <%}%>
                             <%}%>
 
-                           
+
                             <div class="clearfix"></div>
 
                         </div>
@@ -348,7 +350,7 @@
 
             <div class="clearfix"> </div>
         </div>
-        
+
         <!-- footer -->
         <div class="footer_agileinfo_w3">
             <div class="footer_inner_info_w3ls_agileits">
@@ -428,20 +430,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 sign-gd flickr-post">
-                            <h4>Flickr <span>Posts</span></h4>
-                            <ul>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t1.jpg" alt=" " class="img-responsive" /></a></li>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t3.jpg" alt=" " class="img-responsive" /></a></li>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t4.jpg" alt=" " class="img-responsive" /></a></li>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t1.jpg" alt=" " class="img-responsive" /></a></li>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t3.jpg" alt=" " class="img-responsive" /></a></li>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-                                <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t4.jpg" alt=" " class="img-responsive" /></a></li>
-                            </ul>
-                        </div>
+
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -457,8 +446,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
     <!-- //js -->
-    
-    
+
+
     <!-- /nav -->
     <script src="${pageContext.request.contextPath}/js/modernizr-2.6.2.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/classie.js"></script>
@@ -470,20 +459,20 @@
     <!-- price range (top products) -->
     <script src="${pageContext.request.contextPath}/js/jquery-ui.js"></script>
     <script>
-        //<![CDATA[ 
-        $(window).load(function () {
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 9000,
-                values: [50, 6000],
-                slide: function (event, ui) {
-                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                }
-            });
-            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+                                                        //<![CDATA[ 
+                                                        $(window).load(function () {
+                                                            $("#slider-range").slider({
+                                                                range: true,
+                                                                min: 0,
+                                                                max: 9000,
+                                                                values: [50, 6000],
+                                                                slide: function (event, ui) {
+                                                                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                                                                }
+                                                            });
+                                                            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
 
-        }); //]]>
+                                                        }); //]]>
     </script>
     <!-- //price range (top products) -->
 
@@ -491,23 +480,23 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/move-top.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/easing.js"></script>
     <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
-                $('html,body').animate({
-                    scrollTop: $(this.hash).offset().top
-                }, 1000);
-            });
-        });
+                                                        jQuery(document).ready(function ($) {
+                                                            $(".scroll").click(function (event) {
+                                                                event.preventDefault();
+                                                                $('html,body').animate({
+                                                                    scrollTop: $(this.hash).offset().top
+                                                                }, 1000);
+                                                            });
+                                                        });
     </script>
     <!-- //end-smoth-scrolling -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-3.1.1.min.js"></script>
     <!-- Add to session -->
-    
+
     <script>
-        function addToSession(data) {
-            $.post("CartController?go=add", { "pid" : data });
-        }
+                                                        function addToSession(data) {
+                                                            $.post("CartController?go=add", {"pid": data});
+                                                        }
     </script>
     <!-- //Add to session -->
 

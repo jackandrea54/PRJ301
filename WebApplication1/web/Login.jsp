@@ -45,19 +45,6 @@
                 <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
                     <form class="login100-form validate-form flex-sb flex-w" action="LoginRegisterServlet" method="POST">
                         <input type="text" name="go" value="login" hidden>
-                        <span class="login100-form-title p-b-53">
-                            Sign In With
-                        </span>
-
-                        <a href="#" class="btn-face m-b-20">
-                            <i class="fa fa-facebook-official"></i>
-                            Facebook
-                        </a>
-
-                        <a href="#" class="btn-google m-b-20">
-                            <img src="${pageContext.request.contextPath}/images/icons/icon-google.png" alt="GOOGLE">
-                            Google
-                        </a>
 
                         <%
                             String msg = request.getParameter("msg"); 

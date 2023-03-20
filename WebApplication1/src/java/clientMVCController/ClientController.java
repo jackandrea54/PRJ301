@@ -59,21 +59,33 @@ public class ClientController extends HttpServlet {
                 dispath(request, response, "./clientJSP/Shop.jsp");
             }
             if (go.equals("displayProductByCategory")) {
-                int cateID = Integer.parseInt(request.getParameter("cateID"));
-                String sqlPro = "select  * from Product as a join Category "
-                        + " as b on a.cateID = b.cateID and  a.cateId = "+ cateID +" ";
-                ResultSet rsPro = dao.getData(sqlPro);
-                String titleTable = "List of Product";
-                //Chuan bi du lieu cho jsp
-                request.setAttribute("dataPro", rsPro);
-//                request.setAttribute("title", titleTable);
-                //Call jsp
-                RequestDispatcher dispath = request.getRequestDispatcher("/clientJSP/ViewProduct.jsp");
-                dispath.forward(request, response);
+                String [] cateID = request.getParameterValues("cateID");
+                if (cateID == null) {
+                    response.sendRedirect("shop");
+                }else{
+                    String sqlPro = "select  * from Product as a join Category "
+                            + " as b on a.cateID = b.cateID where a.cateID = " + cateID[0] + " ";
+                    for (int i = 1; i < cateID.length; i++) {
+                        sqlPro += "or a.cateID = '" + cateID[i] + "'";
+                    }
+                    ResultSet rsPro = dao.getData(sqlPro);
+                    String titleTable = "List of Product";
+                    //Data cho product
+                    request.setAttribute("dataPro", rsPro);
+                    //Data for menu
+                    String sqlMenu = "select * from Category";
+                    ResultSet rsMenu = dao.getData(sqlMenu);
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataMenu", rsMenu);
+                    //Call jsp
+                    RequestDispatcher dispath = request.getRequestDispatcher("/clientJSP/Shop.jsp");
+                    dispath.forward(request, response); 
+                }
+                
             }
             if (go.equals("search")) {
                 String pname = request.getParameter("pname");
-                String sql = "select a.*, b.cateName from Product as a join Category as b on a.cateId=b.cateId where pname ='" + pname + "'";
+                String sql = "select a.*, b.cateName from Product as a join Category as b on a.cateId=b.cateId where pname like '%" + pname + "%'";
 //                Vector<Product> vector = dao.getProduct(sql);
                 ResultSet rs = dao.getData(sql);
                 //Chuan bi du lieu cho jsp

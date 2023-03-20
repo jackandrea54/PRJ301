@@ -46,10 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<nav>
 						<ul>
 							<li><a href="ClientIndex.jsp" class="active">Home</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="404.html">Team</a></li>
 							<li><a href="../shop">Shop Now</a></li>
-							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -84,7 +81,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</span>
 						<i style="color: white;">|</i> 
 						<span>
-							<a href='LoginRegisterServlet?go=logout' style="color: white;">Logout</a> 
+							<a href='../LoginRegisterServlet?go=logout' style="color: white;">Logout</a> 
 						</span>            
 						<%}%>
 					</div>
@@ -100,10 +97,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</ul>
 			</div>
 			<div id="cd-search" class="cd-search">
-				<form action="#" method="post">
-					<input name="Search" type="search" placeholder="Click enter after typing...">
-				</form>
-			</div>
+                    <form action="../shop" method="GET">
+                        <input type="hidden" name="go" value="search">
+                        <input type="search" placeholder="Click enter after typing..." name="pname" required="">
+                    </form>
+                </div>
 		</div>
 		<!-- //search -->
 		<div class="clearfix"></div>
@@ -129,6 +127,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<div class="checkout-right">
 					<h4>Your shopping cart contains:</h4>
+                                        <form action= "../CartController" method = "POST">
+                                        <input type="hidden"  name="go" value = "update">
 					<table class="timetable_sub">
 						<thead>
 							<tr>
@@ -136,8 +136,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<th>Product</th>
 								<th>Quantiity</th>
 								<th>Product Name</th>
-
 								<th>Price</th>
+								<th>Total</th>
 								<th>Remove</th>
 							</tr>
 						</thead>
@@ -145,9 +145,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 						</tbody>
 					</table>
-					<div class="information-wrapper" style="margin-top: 5em;">
-						<button class= "check_out">Update</button>
-					</div>
+                                        </form>
+					
 				</div>
 				<div class="checkout-left" >
 					<div class="col-md-4 checkout-left-basket">
@@ -374,20 +373,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3 sign-gd flickr-post">
-							<h4>Flickr <span>Posts</span></h4>
-							<ul>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t1.jpg" alt=" " class="img-responsive" /></a></li>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t3.jpg" alt=" " class="img-responsive" /></a></li>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t4.jpg" alt=" " class="img-responsive" /></a></li>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t1.jpg" alt=" " class="img-responsive" /></a></li>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t3.jpg" alt=" " class="img-responsive" /></a></li>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-								<li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t4.jpg" alt=" " class="img-responsive" /></a></li>
-							</ul>
-						</div>
+						
 						<div class="clearfix"></div>
 					</div>
 				</div>

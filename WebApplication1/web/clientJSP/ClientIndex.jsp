@@ -51,9 +51,7 @@
                         <nav>
                             <ul>
                                 <li><a href="./ClientIndex.jsp" class="active">Home</a></li>
-                                <li><a href="about.html">About</a></li>
                                 <li><a href="../shop">Shop Now</a></li>
-                                <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -64,10 +62,10 @@
                     <div class="top_nav_right">
                         <div class="shoecart shoecart2 cart cart box_1">
                             <input type="hidden" name="cmd" value="_cart">
-                                <input type="hidden" name="display" value="1">
-                                <a href="./checkout.jsp">
-                                    <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-                                </a>
+                            <input type="hidden" name="display" value="1">
+                            <a href="./checkout.jsp">
+                                <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                            </a>
                         </div>
                         <div class = "user-info" >
                             <%if (session.getAttribute("username") == null) {%>
@@ -84,7 +82,7 @@
                                 <a href="#" style="color: white;">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     <%=session.getAttribute("username")%>
-                                    </a>
+                                </a>
                             </span>
                             <i style="color: white;">|</i> 
                             <span>
@@ -103,8 +101,8 @@
                         </div>
                         <div id="cd-search" class="cd-search">
                             <form action="../shop" method="GET">
+                                <input type="hidden" name="go" value="search">
                                 <input type="search" placeholder="Click enter after typing..." name="pname" required="">
-                                <input type="submit" name="go" value="search">
                             </form>
                         </div>
                     </div>
@@ -407,7 +405,7 @@
                                 </div>
                                 <div class="address-right">
                                     <h6>Email Address</h6>
-                                    <p>Email :<a href="mailto:example@email.com"> mail@example.com</a></p>
+                                    <p>Email :<a href="mailto:piddfae@gmail.com"> piddfae@gmail.com</a></p>
                                 </div>
                                 <div class="clearfix"> </div>
                             </div>
@@ -425,20 +423,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 sign-gd flickr-post">
-                        <h4>Flickr <span>Posts</span></h4>
-                        <ul>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t1.jpg" alt=" " class="img-responsive" /></a></li>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t3.jpg" alt=" " class="img-responsive" /></a></li>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t4.jpg" alt=" " class="img-responsive" /></a></li>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t1.jpg" alt=" " class="img-responsive" /></a></li>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t3.jpg" alt=" " class="img-responsive" /></a></li>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t2.jpg" alt=" " class="img-responsive" /></a></li>
-                            <li><a href="single.html"><img src="${pageContext.request.contextPath}/images/t4.jpg" alt=" " class="img-responsive" /></a></li>
-                        </ul>
-                    </div>
+
                     <div class="clearfix"></div>
                 </div>
             </div>
@@ -447,91 +432,92 @@
             <p class="copy-right-w3ls-agileits">&copy 2018 Downy Shoes. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
         </div>
     </div>
-</div>
-<!-- //footer -->
-<a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+    <!-- //footer -->
 
 
-<%-- 
-<% 
-    ResultSet rsMenu = (ResultSet) request.getAttribute("dataMenu");
-%>
-<h1><p>Your session ID is <%=session.getId()%>.</p></h1>
-<!--        <h1><p>Your Creation Time is <%= session.getCreationTime()%>.</p></h1>
-<h1><p>Your Last Accessed Time is <%= session.getLastAccessedTime()%>.</p></h1>-->
-<ul>
-    <%while (rsMenu.next()) {%> 
-    <li><a href="../shop?go=displayProductByCategory&cateID=<%=rsMenu.getInt(1)%>"> <%=rsMenu.getString(2)%> </a></li>
-        <%}%>
-</ul>   
-<div>
-    <jsp:include page="ViewProduct.jsp"></jsp:include>
-</div>
-comment --%>
+    <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
 
 
-<!-- js -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
-<!-- //js -->
-<!-- /nav -->
-<script src="${pageContext.request.contextPath}/js/modernizr-2.6.2.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/classie.js"></script>
-<script src="${pageContext.request.contextPath}/js/demo1.js"></script>
-<!-- //nav -->
-<!-- cart-js -->
-<script src="${pageContext.request.contextPath}/js/minicart.js"></script>
-<script>
-shoe.render();
+    <%-- 
+    <% 
+        ResultSet rsMenu = (ResultSet) request.getAttribute("dataMenu");
+    %>
+    <h1><p>Your session ID is <%=session.getId()%>.</p></h1>
+    <!--        <h1><p>Your Creation Time is <%= session.getCreationTime()%>.</p></h1>
+    <h1><p>Your Last Accessed Time is <%= session.getLastAccessedTime()%>.</p></h1>-->
+    <ul>
+        <%while (rsMenu.next()) {%> 
+        <li><a href="../shop?go=displayProductByCategory&cateID=<%=rsMenu.getInt(1)%>"> <%=rsMenu.getString(2)%> </a></li>
+            <%}%>
+    </ul>   
+    <div>
+        <jsp:include page="ViewProduct.jsp"></jsp:include>
+    </div>
+    comment --%>
 
-shoe.cart.on('shoe_checkout', function (evt) {
-    var items, len, i;
 
-    if (this.subtotal() > 0) {
-        items = this.items();
+    <!-- js -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
+    <!-- //js -->
+    <!-- /nav -->
+    <script src="${pageContext.request.contextPath}/js/modernizr-2.6.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/classie.js"></script>
+    <script src="${pageContext.request.contextPath}/js/demo1.js"></script>
+    <!-- //nav -->
+    <!-- cart-js -->
+    <script src="${pageContext.request.contextPath}/js/minicart.js"></script>
+    <script>
+        shoe.render();
 
-        for (i = 0, len = items.length; i < len; i++) {
-        }
-    }
-});
-</script>
-<!-- //cart-js -->
-<!--search-bar-->
-<script src="${pageContext.request.contextPath}/js/search.js"></script>
-<!--//search-bar-->
-<script src="${pageContext.request.contextPath}/js/responsiveslides.min.js"></script>
-<script>
-$(function () {
-    $("#slider4").responsiveSlides({
-        auto: true,
-        pager: true,
-        nav: true,
-        speed: 1000,
-        namespace: "callbacks",
-        before: function () {
-            $('.events').append("<li>before event fired.</li>");
-        },
-        after: function () {
-            $('.events').append("<li>after event fired.</li>");
-        }
-    });
-});
-</script>
-<!-- js for portfolio lightbox -->
-<!-- start-smoth-scrolling -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/move-top.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/easing.js"></script>
-<script type="text/javascript">
-jQuery(document).ready(function ($) {
-    $(".scroll").click(function (event) {
-        event.preventDefault();
-        $('html,body').animate({
-            scrollTop: $(this.hash).offset().top
-        }, 1000);
-    });
-});
-</script>
-<!-- //end-smoth-scrolling -->
+        shoe.cart.on('shoe_checkout', function (evt) {
+            var items, len, i;
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-3.1.1.min.js"></script>
+            if (this.subtotal() > 0) {
+                items = this.items();
+
+                for (i = 0, len = items.length; i < len; i++) {
+                }
+            }
+        });
+    </script>
+    <!-- //cart-js -->
+    <!--search-bar-->
+    <script src="${pageContext.request.contextPath}/js/search.js"></script>
+    <!--//search-bar-->
+    <script src="${pageContext.request.contextPath}/js/responsiveslides.min.js"></script>
+    <script>
+        $(function () {
+            $("#slider4").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: true,
+                speed: 1000,
+                namespace: "callbacks",
+                before: function () {
+                    $('.events').append("<li>before event fired.</li>");
+                },
+                after: function () {
+                    $('.events').append("<li>after event fired.</li>");
+                }
+            });
+        });
+    </script>
+    <!-- js for portfolio lightbox -->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/move-top.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smoth-scrolling -->
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-3.1.1.min.js"></script>
 </body>
 </html>

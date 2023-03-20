@@ -45,8 +45,9 @@
                 <tr>
                     <td><label for="status">status</label></td>
                     <td>
-                        <input type="radio" name="status" id = "status" value="1" <%= (bill.getStatus()== 1 ? "checked" : "")%>> Enable
-                        <input type="radio" name="status" id = "status" value="0" <%= (bill.getStatus()== 0 ? "checked" : "")%> > Disable
+                        <input type="radio" name="status" id = "status" value="0" <%= (bill.getStatus()== 0 ? "checked" : "")%>> Wait
+                        <input type="radio" name="status" id = "status" value="1" <%= (bill.getStatus()== 1 ? "checked" : "")%>> Process
+                        <input type="radio" name="status" id = "status" value="2" <%= (bill.getStatus()== 2 ? "checked" : "")%> > Done
                     </td>
                 </tr>
                 <tr>

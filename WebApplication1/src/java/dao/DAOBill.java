@@ -215,8 +215,11 @@ public class DAOBill extends DBConnect {
             ResultSet rs = this.getData("Select * from BillDetail where bid = '" + bid + "'");
             if (rs.next()) {
                 // co ton tai billdetail
-                // thong bao ma khong lam gi ca
-                n = -1; // khong xoa dc vi constrain (tu dinh nghia sau)
+                //Xoa billDetail trc
+                new DAOBillDetail().removeAllBillDetail(bid);
+                //Tiep tuc xoa Bill
+                Statement state = conn.createStatement();
+                n = state.executeUpdate(sql);
             } else {
                 Statement state = conn.createStatement();
                 n = state.executeUpdate(sql);

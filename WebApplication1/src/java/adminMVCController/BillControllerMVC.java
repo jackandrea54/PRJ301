@@ -43,7 +43,7 @@ public class BillControllerMVC extends HttpServlet {
         DAOBill dao = new DAOBill();
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(3600);
-        if (session.getAttribute("admin") != null) {
+//        if (session.getAttribute("admin") != null) {
             try ( PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 String go = request.getParameter("go");
@@ -116,7 +116,7 @@ public class BillControllerMVC extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(BillControllerMVC.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+//        }
     }
 
     void dispath(HttpServletRequest request, HttpServletResponse response, String url)
