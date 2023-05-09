@@ -32,27 +32,29 @@
                 </tr>
                 <tr>
                     <td><label for="recAddress">Address</label></td>
-                    <td><input type="text" name="recAddress" id = "recAddress" value = "<%= bill.getRecAddress()%>"></td>
+                    <td><input type="text" name="recAddress" id = "recAddress" value = "<%= bill.getRecAddress()%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="recPhone">Phone number</label></td>
-                    <td><input type="text" name="recPhone" id = "recPhone" value = "<%= bill.getRecPhone()%>"></td>
+                    <td><input type="text" pattern="0[1-9]+" name="recPhone" id = "recPhone" value = "<%= bill.getRecPhone()%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="note">Note</label></td>
-                    <td><input type="text" name="note" id = "note" value = "<%= bill.getNote()%>"></td>
+                    <td><input type="text" name="note" id = "note" value = "<%= bill.getNote()%>" required></td>
                 </tr>
                 <tr>
                     <td><label for="status">status</label></td>
                     <td>
+                        <% if(bill.getStatus() != 2){%>
                         <input type="radio" name="status" id = "status" value="0" <%= (bill.getStatus()== 0 ? "checked" : "")%>> Wait
                         <input type="radio" name="status" id = "status" value="1" <%= (bill.getStatus()== 1 ? "checked" : "")%>> Process
+                        <%}%>
                         <input type="radio" name="status" id = "status" value="2" <%= (bill.getStatus()== 2 ? "checked" : "")%> > Done
                     </td>
                 </tr>
                 <tr>
                     <td><label for="cid">Customer ID</label></td>
-                    <td><input type="text" name="cid" id = "cid" value = "<%= bill.getCid()%>"></td>
+                    <td><input type="text" name="cid" id = "cid" value = "<%= bill.getCid()%>" readonly></td>
                 </tr>
                 <tr>
                     <td><input type="submit" value="Update Bill" name="submit"></td>

@@ -113,17 +113,19 @@ public class ProductControllerMVC extends HttpServlet {
                 }
                 if (go.equals("search")) {
                     String pname = request.getParameter("pname");
-                    String sql = "select * from Product as a join Category as b on a.cateId=b.cateId where pname ='" + pname + "'";
-//                Vector<Product> vector = dao.getProduct(sql);
-                    ResultSet rs = dao.getData(sql);
+                    String searchOption = request.getParameter("searchOption");
+                    ResultSet rs = null;
+                    if (searchOption.equals("0")) {
+                        String sql = "select * from Product as a join Category as b on a.cateId=b.cateId where pid ='" + pname + "'";
+                        rs = dao.getData(sql);
+                    } else {
+                        String sql = "select * from Product as a join Category as b on a.cateId=b.cateId where pname ='" + pname + "'";
+                        rs = dao.getData(sql);
+                    }
                     String titleTable = "List of Product";
                     //Chuan bi du lieu cho jsp
                     request.setAttribute("dataPro", rs);
                     request.setAttribute("title", titleTable);
-//                //Call jsp (khong dung sendDirect duoc vi no khong truyen duoc doi tuong)
-//                RequestDispatcher dispath = request.getRequestDispatcher("/adminJSP/ViewProduct.jsp");
-//                //Run
-//                dispath.forward(request, response);
                     dispath(request, response, "/adminJSP/ViewProduct.jsp");
                 }
             }

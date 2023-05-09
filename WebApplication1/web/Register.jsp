@@ -39,7 +39,7 @@
         <div class="limiter">
             <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
                 <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-                    <form class="login100-form validate-form flex-sb flex-w" action="LoginRegisterServlet" method="POST">
+                    <form class="login100-form validate-form flex-sb flex-w" action="LoginRegisterServlet" method="POST" >
                         <input type="text" name="go" value="register" hidden>
 
                         <%
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                            <input class="input100" type="password" name="pass" required>
+                            <input class="input100" type="text" name="pass" id="password" required>
                             <span class="focus-input100"></span>
                         </div>
 
@@ -88,10 +88,11 @@
 
                         </div>
                         <div class="wrap-input100 validate-input" data-validate = "Re-Password is required">
-                            <input class="input100" type="password" name="pass" required>
+                            <input class="input100" type="text" name="re-pass" id="re-password" required>
                             <span class="focus-input100"></span>
-                        </div>   
+                        </div>  
 
+                        <span id='message' ></span>
                         <div class="p-t-31 p-b-9">
                             <span class="txt1">
                                 Address
@@ -108,14 +109,14 @@
                             </span>
                         </div>        
                         <div class="wrap-input100 validate-input" data-validate = "Phone is required">
-                            <input class="input100" type="text" name="phone" required>
+                            <input class="input100" type="text" pattern="0[1-9]+" name="phone" required>
                             <span class="focus-input100"></span>
                         </div>        
 
 
 
                         <div class="container-login100-form-btn m-t-17">
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" id="button">
                                 Sign Up
                             </button>
                         </div>
@@ -153,6 +154,15 @@
         <script src="${pageContext.request.contextPath}/vendor/countdowntime/countdowntime.js"></script>
         <!--===============================================================================================-->
         <script src="${pageContext.request.contextPath}/js/main.js"></script>
+        <script>
+            $('#password, #re-password').on('keyup', function () {
+                if ($('#password').val() == $('#re-password').val()) {
+                    $('#message').html('Matching').css({'color': 'green', 'height': '1em', 'width': '100%'});
+                } else
+                    $('#message').html('Not Matching').css({'color': 'red', 'height': '1em', 'width': '100%'});
+            });
+
+        </script>
 
     </body>
 </html>

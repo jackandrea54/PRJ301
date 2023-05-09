@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.ResultSet;
 import java.util.Vector;
 
 /**
@@ -49,7 +50,10 @@ public class BillDetailControllerMVC extends HttpServlet {
                     go = "listAll"; //Default value
                 }
                 if (go.equals("listAll")) {
-                    request.setAttribute("dataBillDe", dao.getAllBillDetail());
+                    String sql = "select bd.*, b.cid, c.cname from BillDetail as"
+                            + " bd inner join Bill as b on bd.bid = b.bid inner "
+                            + "join Customer as c on b.cid = c.cid";
+                    request.setAttribute("dataBillDe", dao.getData(sql));
                     request.setAttribute("title", "List of Bill Detail");
                     dispath(request, response, "/adminJSP/ViewBillDetail.jsp");
                 }
@@ -108,11 +112,13 @@ public class BillDetailControllerMVC extends HttpServlet {
                 }
                 if (go.equals("search")) {
                     String bid = request.getParameter("bid");
-                    String sql = "select * from BillDetail where bid ='" + bid + "'";
-                    Vector<BillDetail> vector = dao.getBillDetail(sql);
+                    String sql = "select bd.*, b.cid, c.cname from "
+                            + "BillDetail as bd inner join Bill as b on "
+                            + "bd.bid = b.bid inner join Customer as c "
+                            + "on b.cid = c.cid where bd.bid ='" + bid + "'";
                     String titleTable = "List of Bill Detail";
                     //Chuan bi du lieu cho jsp
-                    request.setAttribute("dataBillDe", vector);
+                    request.setAttribute("dataBillDe", dao.getData(sql));
                     request.setAttribute("title", titleTable);
                     dispath(request, response, "/adminJSP/ViewBillDetail.jsp");
                 }

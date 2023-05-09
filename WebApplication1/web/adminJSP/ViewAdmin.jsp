@@ -24,6 +24,7 @@
             <div><a href="./adminJSP/AdminIndex.jsp">Admin Menu</a></div>
             <div><a href="./InsertPage/InsertAdmin.jsp">Insert Admin</a></div>
             <div><a href="AdminControllerMVC">View All Admin</a></div>
+            
             <div class="search-box">
                 <form action="AdminControllerMVC" method="GET">
                     <label>Search</label>

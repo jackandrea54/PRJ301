@@ -10,6 +10,9 @@
 <html>
     <head>
         <title>LANDING PAGE</title>
+        <!--===============================================================================================-->	
+        <link rel="icon" type="image/png" href="https://previews.123rf.com/images/bsd555/bsd5551910/bsd555191001183/132900359-online-store-website-color-icon-marketplace-online-shopping-internet-trading-business-buying.jpg"/>
+        <!--===============================================================================================-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="keywords" content="Downy Shoes Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -68,7 +71,7 @@
                             </a>
                         </div>
                         <div class = "user-info" >
-                            <%if (session.getAttribute("username") == null) {%>
+                            <%if (session.getAttribute("cname") == null) {%>
                             <span>
                                 <a href='../Login.jsp' style="color: white;">Login</a>
                             </span>
@@ -79,9 +82,9 @@
 
                             <%}else{%>
                             <span>
-                                <a href="#" style="color: white;">
+                                <a href="./ClientIndex.jsp" style="color: white;">
                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                    <%=session.getAttribute("username")%>
+                                    <%=session.getAttribute("cname")%>
                                 </a>
                             </span>
                             <i style="color: white;">|</i> 

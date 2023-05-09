@@ -17,15 +17,15 @@
         <table>
             <tr>
                 <td><label for="bid">Bill ID</label></td>
-                <td><input type="text" name="bid" id = "bid"></td>
+                <td><input type="text" name="bid" id = "bid" required></td>
             </tr>
             <tr>
                 <td><label for="pid">Product ID</label></td>
-                <td><input type="text" name="pid" id = "pid"></td>
+                <td><input type="text" name="pid" id = "pid" required></td>
             </tr>
             <tr>
                 <td><label for="buyQuantity">Quantity</label></td>
-                <td><input type="text" name="buyQuantity" id = "buyQuantity"></td>
+                <td><input type="number" name="buyQuantity" id = "buyQuantity" required></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Insert Bill Detail" name="submit"></td>

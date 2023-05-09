@@ -22,11 +22,11 @@
             <table>
                 <tr>
                     <td><label for="admin">Admin account</label></td>
-                    <td><input type="text" name="admin" id = "admin"></td>
+                    <td><input type="text" name="admin" id = "admin" required></td>
                 </tr>
                 <tr>
                     <td><label for="password">Password</label></td>
-                    <td><input type="text" name="password" id = "password"></td>
+                    <td><input type="text" name="password" id = "password" required></td>
                 </tr>
 
                 <tr>

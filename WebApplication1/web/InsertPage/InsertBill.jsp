@@ -17,27 +17,27 @@
             <table>
                 <tr>
                     <td><label for="recAddress">Address</label></td>
-                    <td><input type="text" name="recAddress" id = "recAddress"></td>
+                    <td><input type="text" name="recAddress" id = "recAddress" required></td>
                 </tr>
                 <tr>
                     <td><label for="recPhone">recPhone</label></td>
-                    <td><input type="text" name="recPhone" id = "recPhone"></td>
+                    <td><input type="text" pattern="0[1-9]+" name="recPhone" id = "recPhone" required></td>
                 </tr>
                 <tr>
                     <td><label for="note">note</label></td>
-                    <td><input type="text" name="note" id = "note"></td>
+                    <td><input type="text" name="note" id = "note" required></td>
                 </tr>
                 <tr>
                     <td><label for="status">status</label></td>
                     <td>
-                        <input type="radio" name="status" id = "status" value="0" checked > Wait
+                        <input type="radio" name="status" id = "status" value="0" checked required> Wait
                         <input type="radio" name="status" id = "status" value="1" checked > Process
                         <input type="radio" name="status" id = "status" value="2" checked > Done
                     </td>
                 </tr>
                 <tr>
                     <td><label for="cid">Customer ID</label></td>
-                    <td><input type="text" name="cid" id = "cid"></td>
+                    <td><input type="text" name="cid" id = "cid" required></td>
                 </tr>
                 <tr>
                     <td><input type="submit" value="Insert Bill" name="submit"></td>

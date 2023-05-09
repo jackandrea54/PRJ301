@@ -65,7 +65,7 @@ public class LoginRegisterServlet extends HttpServlet {
                 } else {
                     Customer cus = vector.get(0);
                     session.setAttribute("cid", cus.getCid());
-                    session.setAttribute("username", cus.getUsername());
+                    session.setAttribute("cname", cus.getCname());
                     response.sendRedirect("shop");
                 }
             }

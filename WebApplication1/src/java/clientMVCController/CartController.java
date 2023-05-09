@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -51,16 +52,16 @@ public class CartController extends HttpServlet {
             String go = request.getParameter("go");
 
             if (session.getAttribute("cid") != null) {
-                
+
                 if (go.equals("show")) {
                     Vector<Product> vecPro = new Vector<>();
                     Enumeration em = session.getAttributeNames();
                     int slNo = 0;
-                   
+
                     while (em.hasMoreElements()) {
                         String pid = em.nextElement().toString(); //get key
-                        slNo++;
-                        if (!(pid.equals("cid") || pid.equals("username"))) { //If the key is the value of pid then
+                        if (!(pid.equals("cid") || pid.equals("cname"))) { //If the key is the value of pid then
+                            slNo++;
                             int quantity = Integer.parseInt(session.getAttribute(pid).toString()); //get product quantity
                             //Add Product infomation
                             DAOProduct daoPro = new DAOProduct();
@@ -73,7 +74,7 @@ public class CartController extends HttpServlet {
                                     + "								<td class=\"invert\">\n"
                                     + "									<div class=\"quantity\">\n"
                                     + "										<div class=\"quantity-select\">\n"
-                                    + "											<input type=\"text\" id=\"quantity\" name=\"quantity\" value = \"" + quantity + "\" style=\" max-width: 100%\">\n"
+                                    + "											<input type=\"number\" id=\"quantity\" name=\"quantity\" value = \"" + quantity + "\" style=\" max-width: 100%\" min = \"1\" max = " + product.getQuantity() + ">\n"
                                     + "										</div>\n"
                                     + "									</div>\n"
                                     + "								</td>\n"
@@ -82,19 +83,19 @@ public class CartController extends HttpServlet {
                                     + "								<td class=\"invert\">$" + (product.getPrice() * quantity) + "</td>\n"
                                     + "								<td class=\"invert\">\n"
                                     + "									<div class=\"rem\">\n"
-                                    + "										<a href=\"../CartController?go=delete&pid="+product.getPid()+"\"><div class=\"close1\"></div></a>\n"
+                                    + "										<a href=\"../CartController?go=delete&pid=" + product.getPid() + "\"><div class=\"close1\"></div></a>\n"
                                     + "									</div>\n"
                                     + "								</td>\n"
                                     + "</tr>");
                         }
                     }
-                    if(slNo != 0){
+
+                    if (slNo != 0) {
                         out.println("<div class=\"information-wrapper\" style=\"margin-top: 5em;\">\n"
                                 + "	<button type=\"submit\" class= \"submit check_out\">Update</button>\n"
-                                + "	</div>"); 
+                                + "	</div>");
                     }
-                    
-                    
+
                 }
 
                 //Show the total money for checkout
@@ -129,7 +130,7 @@ public class CartController extends HttpServlet {
                     } else {
                         try {
                             quantity = Integer.parseInt(quantityString); //Try if the string is a integer
-                        } catch (Exception e) {
+                        } catch (NumberFormatException e) {
                         }
                     }
                     if (quantity != 0) {
@@ -143,22 +144,23 @@ public class CartController extends HttpServlet {
                         }
                     }
                 }
-                
+
                 if (go.equals("update")) {
-                    String [] pids = request.getParameterValues("pid");
-                    String [] quantity = request.getParameterValues("quantity");
+                    String[] pids = request.getParameterValues("pid");
+                    String[] quantity = request.getParameterValues("quantity");
                     int quantityInt = 0;
                     for (int i = 0; i < pids.length; i++) {
                         try {
                             quantityInt = Integer.parseInt(quantity[i]); //Try if the string is a integer
-                        } catch (Exception e) {
+                        } catch (NumberFormatException e) {
                         }
                         session.setAttribute(pids[i], quantityInt);
                     }
+                    System.out.println(Arrays.toString(pids));
+                    System.out.println(Arrays.toString(quantity));
                     response.sendRedirect("./clientJSP/checkout.jsp");
-                    
+
                 }
-                
 
                 //Show cart for checkout
                 //Checkout the cart
@@ -180,11 +182,11 @@ public class CartController extends HttpServlet {
                     while (em.hasMoreElements()) {
                         String pid = em.nextElement().toString(); //get key
 
-                        if (!(pid.equals("cid") || pid.equals("username"))) { //If the key is the value of pid then
+                        if (!(pid.equals("cid") || pid.equals("cname"))) { //If the key is the value of pid then
                             int quantity = Integer.parseInt(session.getAttribute(pid).toString()); //get product quantity
                             //Create a new bill with the Customer ID
                             if (bill == null) {
-                                bill = new Bill(address, phone, note, 0, 1, cid);
+                                bill = new Bill(address, phone, note, 0, 0, cid);
                                 bid = String.valueOf(daoBill.AddAndGetBill(bill)); //Get the new created Bill ID 
                             }
 
@@ -207,7 +209,7 @@ public class CartController extends HttpServlet {
                     session.setAttribute("username", username);
                     response.sendRedirect("./shop");
                 }
-                
+
                 if (go.equals("delete")) {
                     String pid = request.getParameter("pid");
                     session.removeAttribute(pid);
@@ -216,7 +218,7 @@ public class CartController extends HttpServlet {
             }
         }
     }
-    
+
     void dispath(HttpServletRequest request, HttpServletResponse response, String url)
             throws ServletException, IOException {
         RequestDispatcher disp = request.getRequestDispatcher(url);

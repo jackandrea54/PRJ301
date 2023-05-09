@@ -9,6 +9,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <head>
         <title>Downy Shoes an Ecommerce Category Bootstrap Responsive Website Template | 404 :: w3layouts</title>
+        <!--===============================================================================================-->	
+        <link rel="icon" type="image/png" href="https://previews.123rf.com/images/bsd555/bsd5551910/bsd555191001183/132900359-online-store-website-color-icon-marketplace-online-shopping-internet-trading-business-buying.jpg"/>
+        <!--===============================================================================================-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="keywords" content="Downy Shoes Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -59,12 +62,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <!-- cart details -->
                     <div class="top_nav_right">
                         <div class="shoecart shoecart2 cart cart box_1">
-                            <form action="#" method="post" class="last">
-                                <input type="hidden" name="cmd" value="_cart">
-                                <input type="hidden" name="display" value="1">
+                            <input type="hidden" name="cmd" value="_cart">
+                            <input type="hidden" name="display" value="1">
+                            <a href="./checkout.jsp">
                                 <button class="top_shoe_cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-                            </form>
+                            </a>
                         </div>
+                        <div class = "user-info" >
+                            <%if (session.getAttribute("cname") == null) {%>
+                            <span>
+                                <a href='../Login.jsp' style="color: white;">Login</a>
+                            </span>
+                            <i style="color: white;">|</i> 
+                            <span>
+                                <a href='../Register.jsp' style="color: white;">Register</a> 
+                            </span>
+
+                            <%}else{%>
+                            <span>
+                                <a href="./404.jsp" style="color: white;">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <%=session.getAttribute("cname")%>
+                                </a>
+                            </span>
+                            <i style="color: white;">|</i> 
+                            <span>
+                                <a href='../LoginRegisterServlet?go=logout' style="color: white;">Logout</a> 
+                            </span>            
+                            <%}%>
+                        </div> 
                     </div>
                 </div>
             </div>

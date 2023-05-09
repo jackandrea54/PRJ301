@@ -90,9 +90,10 @@ public class CustomerControllerMVC extends HttpServlet {
                         String cname = request.getParameter("cname");
                         String username = request.getParameter("username");
                         String password = request.getParameter("password");
+                        String address = request.getParameter("address");
                         String phone = request.getParameter("phone");
                         int status = Integer.parseInt(request.getParameter("status"));
-                        Customer cus = new Customer(cid, cname, username, password, phone, phone, status);
+                        Customer cus = new Customer(cid, cname, username, password, address, phone, status);
                         int n = dao.updateCustomer(cus);
                         dispath(request, response, "CustomerControllerMVC?go=listAll");
                     }

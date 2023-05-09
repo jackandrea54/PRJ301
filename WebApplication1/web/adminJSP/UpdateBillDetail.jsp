@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td><label for="buyQuantity">Quantity</label></td>
-                    <td><input type="text" name="buyQuantity" id = "buyQuantity" value = "<%= billDetail.getBuyQuantity() %>"></td>
+                    <td><input type="number" name="buyQuantity" id = "buyQuantity" value = "<%= billDetail.getBuyQuantity() %>"></td>
                 </tr>
                 <tr>
                     <td><input type="submit" value="Update Bill Detail" name="submit"></td>

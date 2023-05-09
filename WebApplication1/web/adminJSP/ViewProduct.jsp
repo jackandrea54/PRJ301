@@ -21,9 +21,18 @@
             <div><a href="ProductControllerMVC">View All Product</a></div>
             <div class="search-box">
                 <form action="ProductControllerMVC" method="GET">
-                    <label>Search</label>
-                    <input type="text" name="pname" placeholder="Search...">
-                    <input type="submit" name="go" value="search">
+                    <div class="form-group row pt-5">
+                        <label>Search By</label>
+                        <select class="custom-select form-control col-sm-2" id="searchOption" name="searchOption" required="required">
+                            <option value="0">Id</option>
+                            <option value="1">Name</option>
+                        </select>
+                        <div class="col-sm-5">
+                            <input type="text" name="pname" placeholder="Search product...">
+                            <input type="submit" name="go" value="search">
+                        </div>
+                    </div>
+                    
                 </form>
             </div>
         </div>

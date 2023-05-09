@@ -29,27 +29,27 @@
             <table>
                 <tr>
                     <td><label for="pid">Product ID</label></td>
-                    <td><input type="text" name="pid" id = "pid"></td>
+                    <td><input type="text" name="pid" id = "pid" required></td>
                 </tr>
                 <tr>
                     <td><label for="pname">Product Name</label></td>
-                    <td><input type="text" name="pname" id = "pname"></td>
+                    <td><input type="text" name="pname" id = "pname" required></td>
                 </tr>
                 <tr>
                     <td><label for="quantity">quantity</label></td>
-                    <td><input type="text" name="quantity" id = "quantity"></td>
+                    <td><input type="number" name="quantity" id = "quantity" min="1" required></td>
                 </tr>
                 <tr>
                     <td><label for="price">price</label></td>
-                    <td><input type="text" name="price" id = "price"></td>
+                    <td><input type="number" step="0.1" name="price" id = "price" required></td>
                 </tr>
                 <tr>
                     <td><label for="image">image</label></td>
-                    <td><input type="text" name="image" id = "image"></td>
+                    <td><input type="text" name="image" id = "image" required></td>
                 </tr>
                 <tr>
                     <td><label for="description">description</label></td>
-                    <td><input type="text" name="description" id = "description"></td>
+                    <td><input type="text" name="description" id = "description" required></td>
                 </tr>
                 <tr>
                     <td><label for="status">status</label></td>

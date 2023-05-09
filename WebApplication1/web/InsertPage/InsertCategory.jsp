@@ -17,7 +17,7 @@
         <table>
             <tr>
                 <td><label for="cateName">Category Name</label></td>
-                <td><input type="text" name="cateName" id = "cateName"></td>
+                <td><input type="text" name="cateName" id = "cateName" required></td>
             </tr>
             <tr>
                 <td><label for="status">status</label></td>

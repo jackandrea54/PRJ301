@@ -112,6 +112,17 @@ public class BillControllerMVC extends HttpServlet {
                     request.setAttribute("title", titleTable);
                     dispath(request, response, "/adminJSP/ViewBill.jsp");
                 }
+                if (go.equals("filter")) {
+                    String status = request.getParameter("status");
+                    System.out.println(status);
+                    String sql = "select * from Bill  where status = " + status;
+                    Vector<Bill> vector = dao.getBill(sql);
+                    String titleTable = "List of Bill";
+                    //Chuan bi du lieu cho jsp
+                    request.setAttribute("dataBill", vector);
+                    request.setAttribute("title", titleTable);
+                    dispath(request, response, "/adminJSP/ViewBill.jsp");
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(BillControllerMVC.class.getName()).log(Level.SEVERE, null, ex);

@@ -39,11 +39,11 @@
                 </tr>
                 <tr>
                     <td><label for="quantity">quantity</label></td>
-                    <td><input type="text" name="quantity" id = "quantity" value="<%= pro.getQuantity() %>"></td>
+                    <td><input type="number" name="quantity" id = "quantity" value="<%= pro.getQuantity() %>"></td>
                 </tr>
                 <tr>
                     <td><label for="price">price</label></td>
-                    <td><input type="text" name="price" id = "price" value="<%= pro.getPrice() %>"></td>
+                    <td><input type="number" step="0.1" name="price" id = "price" value="<%= pro.getPrice() %>"></td>
                 </tr>
                 <tr>
                     <td><label for="image">image</label></td>

@@ -13,9 +13,9 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Nav.css " type="text/css">
     </head>
     <body>
-        <%@ page import = "entity.BillDetail, java.util.Vector" %>
+        <%@ page import = "entity.BillDetail, java.sql.ResultSet" %>
         <% 
-            Vector<BillDetail> vector = (Vector<BillDetail>) request.getAttribute("dataBillDe");
+            ResultSet rs = (ResultSet) request.getAttribute("dataBillDe");
             String title = (String) request.getAttribute("title");
         %>  
         <div class="topnav">
@@ -38,19 +38,23 @@
                     <th>Buy Quantity</th>
                     <th>Buy Price</th>
                     <th>Subtotal</th>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
 
-                <% for (BillDetail temp : vector) { %>
+                <%while (rs.next()) {%>
                 <tr>
-                    <td><%=temp.getBid() %></td>
-                    <td><%= temp.getPid() %></td>
-                    <td><%= temp.getBuyQuantity() %></td>
-                    <td><%= temp.getBuyPrice() %></td>
-                    <td><%= temp.getSubtotal() %></td>
-                    <td><a href="BillDetailControllerMVC?go=update&bid=<%= temp.getBid() %>&pid=<%= temp.getPid() %>">Update</a></td>
-                    <td><a href="BillDetailControllerMVC?go=delete&bid=<%= temp.getBid() %>&pid=<%= temp.getPid() %>">Delete</a></td>
+                    <td><%=rs.getString(1) %></td>
+                    <td><%= rs.getString(2) %></td>
+                    <td><%= rs.getString(3) %></td>
+                    <td><%= rs.getString(4) %></td>
+                    <td><%= rs.getString(5) %></td>
+                    <td><%= rs.getString(6) %></td>
+                    <td><%= rs.getString(7) %></td>
+                    <td><a href="BillDetailControllerMVC?go=update&bid=<%= rs.getString(1) %>&pid=<%= rs.getString(2) %>">Update</a></td>
+                    <td><a href="BillDetailControllerMVC?go=delete&bid=<%= rs.getString(1) %>&pid=<%= rs.getString(2) %>">Delete</a></td>
                 </tr>
                 <%}%> 
             </table>

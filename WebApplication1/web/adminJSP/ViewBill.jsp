@@ -26,6 +26,17 @@
             <div><a href="./InsertPage/InsertBill.jsp">Insert Bill</a></div>
             <div><a href="BillControllerMVC">View All Bill</a></div>
             <div class="search-box">
+                <form action="BillControllerMVC" method="GET">
+                    <label>Filter on Status</label>
+                    <select name = "status">
+                        <option value = "0" >Wait</option>
+                        <option value = "1" >Process</option>
+                        <option value = "2" >Done</option>
+                    </select>
+                    <input type="submit" name="go" value="filter">
+                </form>
+            </div>
+            <div class="search-box">
                 <form class="searchForm" action="BillControllerMVC" method="GET">
                     <label>Search</label>
                     <input type="text" name="bid" placeholder="Search bill ID...">

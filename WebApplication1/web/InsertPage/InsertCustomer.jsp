@@ -17,23 +17,23 @@
             <table>
                 <tr>
                     <td><label for="cname">Customer Name</label></td>
-                    <td><input type="text" name="cname" id = "cname"></td>
+                    <td><input type="text" name="cname" id = "cname" required></td>
                 </tr>
                 <tr>
                     <td><label for="username">username</label></td>
-                    <td><input type="text" name="username" id = "username"></td>
+                    <td><input type="text" name="username" id = "username" required></td>
                 </tr>
                 <tr>
                     <td><label for="password">password</label></td>
-                    <td><input type="text" name="password" id = "password"></td>
+                    <td><input type="text" name="password" id = "password" required></td>
                 </tr>
                 <tr>
                     <td><label for="address">address</label></td>
-                    <td><input type="text" name="address" id = "address"></td>
+                    <td><input type="text" name="address" id = "address" required></td>
                 </tr>
                 <tr>
                     <td><label for="phone">phone</label></td>
-                    <td><input type="text" name="phone" id = "phone"></td>
+                    <td><input type="text" pattern="0[1-9]+" name="phone" id = "phone" required></td>
                 </tr>
                 <tr>
                     <td><label for="status">status</label></td>
